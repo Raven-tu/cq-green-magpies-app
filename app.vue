@@ -1,20 +1,34 @@
+<!--
+ * @Author: raventu
+ * @Date: 2023-05-21 20:06:47
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-06-26 18:07:53
+ * @FilePath: /cq-green-magpies-app/app.vue
+ * @Description: app entry
+-->
 <script setup lang="ts">
-import { appName } from '~/constants'
+import { darkTheme } from 'naive-ui'
 
 useHead({
-  title: appName,
+  // title: appName,
 })
+const color = useColorMode()
+const theme = computed(() => color.value === 'dark' ? darkTheme : null)
 </script>
 
 <template>
   <VitePwaManifest />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <n-config-provider :theme="theme">
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </n-config-provider>
 </template>
 
 <style>
-html, body , #__nuxt{
+html,
+body,
+#__nuxt {
   height: 100vh;
   margin: 0;
   padding: 0;

@@ -1,9 +1,21 @@
+<!--
+ * @Author: raventu
+ * @Date: 2023-05-21 20:06:47
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-06-26 17:46:00
+ * @FilePath: /cq-green-magpies-app/layouts/default.vue
+ * @Description:
+-->
 <template>
-  <main class="px-10 py-20 text-center">
-    <slot />
-    <Footer />
-    <div class="mx-auto mt-5 text-center text-sm opacity-25">
-      [Default Layout]
+  <main class="main-layout flex">
+    <!-- left -->
+    <MainNav />
+
+    <!-- right -->
+    <div class="layout-content flex-1">
+      <slot />
     </div>
+
+    <!-- <Footer /> -->
   </main>
 </template>

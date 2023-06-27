@@ -1,5 +1,5 @@
 {
-  "name": "cq-ct-console-app",
+  "name": "cq-green-magpies-app",
   "private": true,
   "packageManager": "pnpm@8.5.1",
   "description": "配对 go-cqhttp 的 web 前端应用",

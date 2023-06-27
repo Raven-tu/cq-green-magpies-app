@@ -6,5 +6,19 @@
   "files.associations": {
     "*.css": "postcss"
   },
+  "fileheader.configObj": {
+    "autoAdd": true, // 自动添加头部注释开启才能自动添加
+    "autoAlready": true, // 默认开启
+    "supportAutoLanguage": ["ts", "js", "vue"], // 设置过后只有该数组里面的文件 才会自动添加头部注释
+    "prohibitAutoAdd": ["json", "md"] // 禁止.json .md文件，自动添加头部注释
+  },
+  "fileheader.customMade": {
+    "Author": "git config user.name", // 同时获取用户名与邮箱
+    "Date": "Do not edit", // 文件创建时间(不变)
+    "LastEditors": "git config user.name ", // 文件最后编辑者 与Author字段一致
+    "LastEditTime": "Do not edit", // 文件最后编辑时间
+    "FilePath": "Do not edit", // 文件在项目中的相对路径 自动更新
+    "Description": "" // 介绍文件的作用、文件的入参、出参。
+  },
   "editor.formatOnSave": false
 }

@@ -11,6 +11,9 @@ dependencies:
   nuxt:
     specifier: ^3.6.0
     version: 3.6.0(@types/node@18.16.0)(eslint@8.41.0)(rollup@2.79.1)(typescript@5.0.4)(vue-tsc@1.6.5)
+  spacingjs:
+    specifier: ^1.0.7
+    version: 1.0.7
 
 devDependencies:
   '@antfu/eslint-config':
@@ -8717,6 +8720,10 @@ packages:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
     deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
+
+  /spacingjs@1.0.7:
+    resolution: {integrity: sha512-iQmfvdsrvpExLE0SgjVDC6sh/xIWJA2ilbZbRAKkY0n9MfbpSm+KnKHgplkFWsia4TIN+HgbdnA9B/aEu1vAHA==}
+    dev: false
 
   /spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}

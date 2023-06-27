@@ -1,4 +1,11 @@
-import { resolve } from 'node:path'
+/*
+ * @Author: raventu
+ * @Date: 2023-05-21 20:06:47
+ * @LastEditors: raventu 80778915raventu@gmail.com
+ * @LastEditTime: 2023-06-26 17:13:21
+ * @FilePath: /cq-green-magpies-app/nuxt.config.ts
+ * @Description:
+ */
 import { pwa } from './config/pwa'
 import { appDescription } from './constants/index'
 
@@ -12,11 +19,40 @@ export default defineNuxtConfig({
     '@huntersofbook/naive-ui-nuxt',
   ],
 
+  imports: {
+    dirs: [
+      // 扫描顶层目录中模块，指定特定文件名和后缀名
+      'components/*/*.vue',
+      // 扫描顶层目录中模块
+      'composables',
+      // 扫描内嵌一层深度的模块，指定特定文件名和后缀名
+      'composables/*/index.{ts,js,mjs,mts}',
+      // 扫描给定目录中所有模块
+      'composables/**',
+      'store',
+    ],
+  },
+
   runtimeConfig: {
     apiSecret: '123',
     public: {
       apiBase: '/api',
     },
+  },
+
+  routeRules: {
+    // Homepage pre-rendered at build time
+    '/': { ssr: false },
+    // Product page generated on-demand, revalidates in background
+    // '/products/**': { swr: true },
+    // Blog post generated on-demand once until next deploy
+    // '/blog/**': { isr: true },
+    // Admin dashboard renders only on client-side
+    // '/admin/**': { ssr: false },
+    // Add cors headers on API routes
+    // '/api/**': { cors: true },
+    // Redirects legacy urls
+    // '/old-page': { redirect: '/new-page' }
   },
   plugins: ['plugins/error.ts'],
   experimental: {
@@ -61,10 +97,16 @@ export default defineNuxtConfig({
         { name: 'description', content: appDescription },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
+      script: [
+        { src: 'https://cdn.jsdelivr.net/npm/spacingjs', type: 'text/javascript', defer: true },
+      ],
     },
   },
 
   pwa,
+  devtools: {
+    enabled: true,
+  },
   vite: {
     resolve: {
       // alias: {
