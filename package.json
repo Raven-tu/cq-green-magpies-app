@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "@huntersofbook/naive-ui-nuxt": "^1.0.0",
-    "nuxt": "^3.6.0"
+    "joi": "^17.9.2",
+    "nuxt": "^3.6.0",
+    "ws": "^8.2.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.0",
@@ -27,6 +29,7 @@
     "@nuxt/devtools": "^0.5.0",
     "@nuxtjs/color-mode": "^3.2.0",
     "@pinia/nuxt": "^0.4.11",
+    "@sidebase/nuxt-auth": "0.6.0-beta.3",
     "@types/node": "^18.16.0",
     "@unocss/eslint-config": "^0.51.13",
     "@unocss/nuxt": "^0.51.13",

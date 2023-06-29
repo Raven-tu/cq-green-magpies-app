@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-26 17:38:51
  * @LastEditors: raventu 
- * @LastEditTime: 2023-06-26 20:30:40
+ * @LastEditTime: 2023-06-29 18:23:26
  * @FilePath: /cq-green-magpies-app/components/LoginWS.vue
  * @Description: 登录框
 -->
@@ -17,16 +17,14 @@ function handleConnect() {
   console.log('wsPath', wsPath.value)
   console.log('passwd', passwd.value)
   console.log('checkBoxVal', checkBoxVal.value)
-  setTimeout(() => {
-    connectLoading.value = false
-  }, 3000)
+  useFetch()
 }
 </script>
 
 <template>
   <!-- h-120 w-90  TODO:美化登录 -->
   <div
-    class="card-shadow box-border h-80 w-90 flex flex-col items-center justify-around border-2 rounded-2xl bg-gray-200 p-4"
+    class="box-border h-80 w-90 flex flex-col items-center justify-around border-2 rounded-2xl bg-gray-200 p-4 card-shadow"
     dark="bg-gray-700"
   >
     <p class="text-2xl">
