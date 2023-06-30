@@ -20,5 +20,9 @@
     "FilePath": "Do not edit", // 文件在项目中的相对路径 自动更新
     "Description": "" // 介绍文件的作用、文件的入参、出参。
   },
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "cSpell.words": [
+    "nuxt",
+    "tsuk"
+  ]
 }
