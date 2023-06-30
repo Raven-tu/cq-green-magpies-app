@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
- * @LastEditors: raventu 80778915raventu@gmail.com
- * @LastEditTime: 2023-06-26 17:13:21
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-01 01:45:04
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
