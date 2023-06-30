@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div class="layout-nav bg-nav_bg h-100vh w-20 flex flex-col justify-between p-4" dark="bg-dk_nav_bg">
+  <div class="layout-nav h-100vh w-20 flex flex-col justify-between bg-nav_bg p-4" dark="bg-dk_nav_bg">
     <div class="flex flex-col space-y-6">
       <button class="text-4xl !outline-none">
         <div class="i-carbon-home" />
