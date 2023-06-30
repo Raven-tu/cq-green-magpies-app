@@ -20,9 +20,12 @@
     "@huntersofbook/naive-ui-nuxt": "^1.0.0",
     "@nuxt/kit": "^3.6.1",
     "@tsuk1ko/cq-websocket": "^2.3.1",
+    "dayjs": "^1.11.8",
     "joi": "^17.9.2",
     "nuxt": "^3.6.0",
     "qs": "^6.11.2",
+    "winston": "^3.9.0",
+    "winston-daily-rotate-file": "^4.7.1",
     "ws": "^8.2.2"
   },
   "devDependencies": {
