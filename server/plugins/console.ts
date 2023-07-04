@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
- * @LastEditors: raventu
- * @LastEditTime: 2023-07-01 03:07:26
+ * @LastEditors: raventu 
+ * @LastEditTime: 2023-07-04 17:55:52
  * @FilePath: /cq-green-magpies-app/server/plugins/console.ts
  * @Description: 启动 pino 日志服务
  */
@@ -23,13 +23,13 @@ export default defineNitroPlugin(() => {
       new transports.File({
         filename: 'logs/server.log',
         level: 'info',
-        maxsize: 1024,
+        maxsize: 102400,
         format: customFormat,
       }),
       new transports.File({
         filename: 'logs/error.log',
         level: 'error',
-        maxsize: 1024,
+        maxsize: 102400,
         format: customFormat,
       }),
     ],
