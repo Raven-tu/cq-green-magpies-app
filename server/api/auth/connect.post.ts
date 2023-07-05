@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
- * @LastEditors: raventu
- * @LastEditTime: 2023-06-30 18:03:28
+ * @LastEditors: raventu 
+ * @LastEditTime: 2023-07-05 14:38:46
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.post.ts
  * @Description:
  */
@@ -14,7 +14,7 @@ import { testWs2cq } from '~/server/utils/ws/ws2cq'
 export default defineEventHandler(async (event) => {
   // 获取 query
   const body = await readBody(event)
-  const { host, port, accessToken } = body
+  const { host, prefix, port, accessToken } = body
   // 校验数据joi
   const schema = Joi.object({
     host: Joi.string().required()
@@ -30,10 +30,10 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const [msg, botInstance] = await testWs2cq(host, 6800, accessToken)
+    const [msg, botInstance] = await testWs2cq(host, port, accessToken)
     // 向 global 中添加 cqBot
     global.cqBot = botInstance
-    const ws = new WebSocket('ws://localhost:4000')
+    const ws = new WebSocket('ws://localhost:4000')   
     // 向 global 中添加 nuxt ws
     global.ws = ws
 
@@ -61,8 +61,8 @@ export default defineEventHandler(async (event) => {
 
     ws.on('message', (data) => {
       try {
-        const wsMsg = JSON.parse(data.toString())
-        console.log('wsMsg', wsMsg)
+        // const wsMsg = JSON.parse(data.toString())
+        // console.log('wsMsg', wsMsg)
       }
       catch (e) {
         console.error(e)
