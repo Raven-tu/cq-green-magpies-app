@@ -43,6 +43,9 @@ devDependencies:
   '@iconify-json/carbon':
     specifier: ^1.1.18
     version: 1.1.18
+  '@iconify-json/material-symbols':
+    specifier: ^1.1.50
+    version: 1.1.50
   '@iconify-json/twemoji':
     specifier: ^1.1.11
     version: 1.1.11
@@ -1904,6 +1907,12 @@ packages:
 
   /@iconify-json/carbon@1.1.18:
     resolution: {integrity: sha512-RbKET6KS9xUMeYVq1FUH3UUA7AYNcnApkHt2AccCwTWTQQs/O58ji4Of6z6PhRajGlbfvrJzT/Uqh19OKECRvA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/material-symbols@1.1.50:
+    resolution: {integrity: sha512-sz2Vuws9CIL9doMBqB/M3awCQ9gzmk5m2UdosKgHd3/qIC12q1hq/wFZ6QisP8fLwgl+jRLdKenfA5mytIa2Xw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

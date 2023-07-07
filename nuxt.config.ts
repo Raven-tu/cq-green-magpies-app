@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
- * @LastEditors: raventu 
- * @LastEditTime: 2023-07-05 13:42:13
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-07 12:44:20
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
@@ -108,17 +108,5 @@ export default defineNuxtConfig({
     enabled: true,
   },
   vite: {
-    resolve: {
-      // alias: {
-      //   '~': resolve(__dirname, 'src'),
-      //   '#': resolve(__dirname, 'src/types'),
-      // },
-    },
-    // plugins: [
-    //   Components({
-    //     dts: true,
-    //     resolvers: [NaiveUiResolver()],
-    //   }),
-    // ],
   },
 })

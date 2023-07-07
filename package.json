@@ -31,6 +31,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.7",
     "@iconify-json/carbon": "^1.1.18",
+    "@iconify-json/material-symbols": "^1.1.50",
     "@iconify-json/twemoji": "^1.1.11",
     "@nuxt/devtools": "^0.6.6",
     "@nuxtjs/color-mode": "^3.3.0",

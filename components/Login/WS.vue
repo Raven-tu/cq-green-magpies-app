@@ -1,13 +1,13 @@
 <!--
  * @Author: raventu
  * @Date: 2023-06-26 17:38:51
- * @LastEditors: raventu 
- * @LastEditTime: 2023-07-05 14:44:33
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-07 12:44:01
  * @FilePath: /cq-green-magpies-app/components/Login/WS.vue
  * @Description: 登录框
 -->
 <script lang='ts' setup>
-import { useAppStore } from '~/store/useAppStore';
+import { useAppStore } from '~/store/useAppStore'
 
 const wsPath = ref<string>('192.168.1.218')
 const port = ref<number>(6800)
@@ -18,16 +18,16 @@ const { setWsc } = useAppStore()
 
 function handleConnect() {
   connectLoading.value = true
-  useFetch("/api/auth/connect", {
+  useFetch('/api/auth/connect', {
     method: 'POST',
     body: {
       host: wsPath.value,
       port: port.value,
       accessToken: passwd.value,
-    }
+    },
   })
     .then((res) => {
-      const path = "ws://" + wsPath.value + ":" + port.value
+      const path = `ws://${wsPath.value}:${port.value}`
       const wsc = new WebSocket(path)
       setWsc(wsc)
       connectLoading.value = false
@@ -43,7 +43,8 @@ function handleConnect() {
   <!-- h-120 w-90  TODO:美化登录 -->
   <div
     class="box-border h-80 w-90 flex flex-col items-center justify-around border-2 rounded-2xl bg-gray-200 p-4 card-shadow"
-    dark="bg-gray-700">
+    dark="bg-gray-700"
+  >
     <p class="text-2xl">
       连接
     </p>
@@ -54,7 +55,6 @@ function handleConnect() {
         <n-input-number v-model:value="port" :show-button="false" />
       </n-space>
     </n-input-group>
-
 
     <n-input v-model:value="passwd" type="password" show-password-on="click" placeholder="passwd" round>
       <template #prefix>
@@ -72,7 +72,7 @@ function handleConnect() {
       </n-checkbox-group>
     </div>
 
-    <n-button type="primary" strong secondary block round :loading="connectLoading" @click="handleConnect">
+    <n-button type="primary" strong secondary round block :loading="connectLoading" @click="handleConnect">
       GO
     </n-button>
   </div>
