@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
- * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 12:44:20
+ * @LastEditors: raventu 
+ * @LastEditTime: 2023-07-07 12:56:48
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     // Homepage pre-rendered at build time
-    '/': { ssr: false },
+    '/**': { ssr: false },
     // Product page generated on-demand, revalidates in background
     // '/products/**': { swr: true },
     // Blog post generated on-demand once until next deploy

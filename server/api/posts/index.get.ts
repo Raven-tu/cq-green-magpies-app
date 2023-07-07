@@ -1,3 +1,11 @@
+/*
+ * @Author: raventu
+ * @Date: 2023-06-26 14:59:21
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-07 13:54:43
+ * @FilePath: /cq-green-magpies-app/server/api/posts/index.get.ts
+ * @Description:
+ */
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 

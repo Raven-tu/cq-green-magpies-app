@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 09:56:20
+ * @LastEditTime: 2023-07-07 13:08:37
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description:
 -->
@@ -18,7 +18,9 @@ import StatusButtonBar from '~/components/Status/ButtonBar.vue'
 
     <!-- right -->
     <div class="layout-content flex flex-1 flex-col">
-      <slot />
+      <div class="h-full w-full">
+        <slot />
+      </div>
       <!-- 底部状态条 -->
       <StatusButtonBar />
     </div>

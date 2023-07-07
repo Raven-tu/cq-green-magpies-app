@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-29 17:39:24
  * @LastEditors: raventu
- * @LastEditTime: 2023-06-29 17:53:01
+ * @LastEditTime: 2023-07-07 14:00:36
  * @FilePath: /cq-green-magpies-app/server/utils/helper/index.ts
  * @Description: 常用工具函数 服务端
  */
@@ -27,3 +27,6 @@ export function genTitle() {
   const day = (`0${currentDate.getDay()}`).slice(-2)
   return `${year}-${month}-${day}`
 }
+
+// 生成随机10位字符串
+export const genEchoStr = () => Math.random().toString(36).substring(2, 7)
