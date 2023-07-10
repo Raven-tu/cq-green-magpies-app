@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 17:04:02
+ * @LastEditTime: 2023-07-08 01:19:17
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.post.ts
  * @Description:
  */
@@ -32,18 +32,10 @@ export default defineEventHandler(async (event) => {
   try {
     const [msg, botInstance] = await testWs2cq(host, port, accessToken)
     // 向 global 中添加 cqBot
-    global.cqBot = botInstance
+    globalThis.cqBot = botInstance
     const ws = new WebSocket('ws://localhost:4000')
     // 向 global 中添加 nuxt ws
-    global.ws = ws
-
-    // ws.onopen = function (mevt) {
-    //   console.log('客户端已连接')
-    // }
-
-    // ws.onclose = function (mevt) {
-    //   console.log('连接关闭')
-    // }
+    globalThis.ws = ws
 
     // 设置相互转发
     botInstance.once('message', () => {
@@ -72,8 +64,6 @@ export default defineEventHandler(async (event) => {
               ws.send(JSON.stringify(err))
             })
         }
-
-        console.log('wsMsg', wsMsg)
       }
       catch (e) {
         console.error(e)

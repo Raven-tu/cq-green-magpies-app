@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-06-29 17:39:24
- * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 14:00:36
+ * @LastEditors: raventu 
+ * @LastEditTime: 2023-07-10 12:12:38
  * @FilePath: /cq-green-magpies-app/server/utils/helper/index.ts
  * @Description: 常用工具函数 服务端
  */
@@ -17,6 +17,11 @@
 export function responseJson(code: number, msg: string, data: object) {
   const resp = { code, msg, data }
   return JSON.stringify(resp)
+}
+
+export function responseObject(code: number, msg: string, data: object) {
+  const resp = { code, msg, data }
+  return resp
 }
 
 // 获取当前时间

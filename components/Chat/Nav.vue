@@ -2,13 +2,13 @@
  * @Author: raventu
  * @Date: 2023-07-07 13:12:37
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 13:30:39
+ * @LastEditTime: 2023-07-10 14:37:54
  * @FilePath: /cq-green-magpies-app/components/Chat/Nav.vue
  * @Description: 聊天侧边栏
 -->
 <script lang='ts' setup>
-import Dialog from '~/components/Chat/Dialog.vue'
-import Friend from '~/components/Chat/Friend.vue'
+import Dialog from '~/components/Chat/Nav/Dialog.vue'
+import Friend from '~/components/Chat/Nav/Friend.vue'
 </script>
 
 <template>
@@ -21,6 +21,3 @@ import Friend from '~/components/Chat/Friend.vue'
     <Dialog />
   </div>
 </template>
-
-<style lang='less' scoped>
-</style>

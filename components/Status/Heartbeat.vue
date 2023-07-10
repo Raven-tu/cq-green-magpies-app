@@ -1,9 +1,9 @@
 <!--
  * @Author: raventu
  * @Date: 2023-07-07 09:46:08
- * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 12:43:55
- * @FilePath: /cq-green-magpies-app/components/Status/heartbeat.vue
+ * @LastEditors: raventu 
+ * @LastEditTime: 2023-07-10 09:28:47
+ * @FilePath: /cq-green-magpies-app/components/Status/Heartbeat.vue
  * @Description: CQ 心跳包 ping
 -->
 <script lang='ts' setup>
@@ -30,9 +30,6 @@ function setPingNum() {
   const thisTime = new Date().getTime() / 1000
   const heartTime = heartbeatMsg.value.time
   pingNum.value = Number((thisTime - heartTime).toFixed(2))
-  console.log('thisTime', thisTime)
-  console.log('heartTime', heartTime)
-  console.log('pingNum', pingNum.value)
 }
 const { pause, resume } = useIntervalFn(setPingNum, 5000)
 pause()

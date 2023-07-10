@@ -1,12 +1,14 @@
 /*
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
- * @LastEditors: raventu 
- * @LastEditTime: 2023-07-05 13:47:00
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-10 09:20:09
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
 import { WebSocketServer } from 'ws'
+
+import { WSLogs } from '~/server/utils/helper/logs'
 
 export default defineNitroPlugin((nitroApp) => {
   const wss = new WebSocketServer({ port: 4000 })
@@ -15,10 +17,8 @@ export default defineNitroPlugin((nitroApp) => {
     // 客户端
     ws.on('message', (data) => {
       // 去掉转义字符
-      let s = data.toString()
-      s = s.replace(/[\'\"\\\/\b\f\n\r\t]/g, '')
-      // 去掉特殊字符
-      console.log(`received:${s}`)
+      const s = data.toString()
+      WSLogs(s)
       // 服务器广播
       // 广播到所有连接的WebSocket客户端，包括其自身。
       wss.clients.forEach((client) => {
