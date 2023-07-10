@@ -1,0 +1,50 @@
+<!--
+ * @Author: raventu
+ * @Date: 2023-07-10 09:29:53
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-10 15:27:17
+ * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
+ * @Description: 聊天窗口
+-->
+<script lang='ts' setup>
+import { storeToRefs } from 'pinia'
+import Title from '~/components/Chat/Content/Title.vue'
+import Input from '~/components/Chat/Content/Input.vue'
+import History from '~/components/Chat/Content/History.vue'
+import { useChatStore } from '~/store/useChatStore'
+
+const { activeChatType } = storeToRefs(useChatStore())
+const { getActiveChat } = useChatStore()
+
+const chatInfo = computed(() => {
+  return {
+    avatar: activeChatType.value === 'group' ? `https://p.qlogo.cn/gh/${getActiveChat('group').group_id}/${getActiveChat('group').group_id}/0` : `https://q1.qlogo.cn/g?b=qq&s=0&nk=${getActiveChat('private').user_id}`,
+    title: activeChatType.value === 'group' ? getActiveChat('group').group_name : getActiveChat('private').nickname,
+    id: activeChatType.value === 'group' ? getActiveChat('group').group_id : getActiveChat('private').user_id,
+  }
+})
+</script>
+
+<template>
+  <div class="h-full w-full flex flex-1">
+    <!-- 非空 -->
+    <div v-show="activeChatType !== 'empty'" class="flex flex-1 flex-col p-4">
+      <!-- 头部信息 -->
+      <Title :chat-info="chatInfo" />
+      <!-- 聊天记录 -->
+      <History />
+      <!-- 输入框 -->
+      <Input :chat-info="chatInfo" />
+    </div>
+    <!-- 空 -->
+    <div v-show="activeChatType === 'empty'" class="flex flex-1 flex-col items-center justify-center">
+      <div class="i-material-symbols-chat-empty h-20 w-20" />
+      <div class="mt-2 text-sm text-gray-400 dark:text-gray-500">
+        暂无聊天
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang='less' scoped>
+</style>
