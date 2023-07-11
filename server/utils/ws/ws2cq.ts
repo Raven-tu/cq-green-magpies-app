@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 11:06:22
  * @LastEditors: raventu
- * @LastEditTime: 2023-06-30 17:44:38
+ * @LastEditTime: 2023-07-10 16:35:25
  * @FilePath: /cq-green-magpies-app/server/utils/ws/ws2cq.ts
  * @Description:  用于测试 cq-websocket 的连接
  */
@@ -11,7 +11,6 @@ import { CQWebSocket } from '@tsuk1ko/cq-websocket'
 
 const defultConfig = {
   host: '127.0.0.1',
-  // "host": "127.0.0.1",
   port: 6800,
   enableAPI: true,
   enableEvent: true,

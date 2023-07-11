@@ -1,8 +1,8 @@
 /*
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
- * @LastEditors: raventu 
- * @LastEditTime: 2023-07-07 12:56:48
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-10 16:58:55
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
@@ -34,10 +34,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    apiSecret: '123',
-    public: {
-      apiBase: '/api',
-    },
+    JWTSECRET: 'jLmbfXUz897WgG',
   },
 
   routeRules: {
