@@ -22,7 +22,9 @@
   },
   "editor.formatOnSave": false,
   "cSpell.words": [
+    "JWTSECRET",
     "nuxt",
+    "redev",
     "tsuk"
   ]
 }
