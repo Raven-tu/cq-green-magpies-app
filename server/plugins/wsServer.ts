@@ -2,13 +2,13 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 09:20:09
+ * @LastEditTime: 2023-07-11 17:56:40
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
 import { WebSocketServer } from 'ws'
 
-import { WSLogs } from '~/server/utils/helper/logs'
+import { WSLogs } from '~/server/utils/helper/logsHelper'
 
 export default defineNitroPlugin((nitroApp) => {
   const wss = new WebSocketServer({ port: 4000 })
