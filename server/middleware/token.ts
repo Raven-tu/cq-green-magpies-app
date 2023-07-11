@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-11 16:34:29
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-11 17:46:50
+ * @LastEditTime: 2023-07-11 18:20:53
  * @FilePath: /cq-green-magpies-app/server/middleware/token.ts
  * @Description: 权限校验
  */
@@ -10,11 +10,12 @@
 import jwt from 'jsonwebtoken'
 
 export default defineEventHandler(async (event) => {
-  console.log(`New request: ${event.node.req.url}`)
-
   const reqUrl = event.node.req.url
-  if (checkEscapeRouting(reqUrl ?? ''))
+  const isApi = reqUrl?.startsWith('/api')
+
+  if (checkEscapeRouting(reqUrl ?? '') || !isApi)
     return
+  console.log(`New request: ${event.node.req.url}`)
 
   const { JWTSECRET } = useRuntimeConfig()
 
@@ -30,11 +31,11 @@ export default defineEventHandler(async (event) => {
     console.log(`token verify error ${error.name}`)
     switch (error.name) {
       case 'TokenExpiredError':
-        return responseObject(500, 'User login has expired', {})
+        return responseObject(401, 'User login has expired', {})
       case 'JsonWebTokenError':
-        return responseObject(500, 'Invalid Token', {})
+        return responseObject(401, 'Invalid Token', {})
       default:
-        return responseObject(500, 'Invalid Token', {})
+        return responseObject(401, 'Invalid Token', {})
     }
   }
 })
