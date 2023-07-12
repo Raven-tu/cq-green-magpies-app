@@ -2,11 +2,11 @@
  * @Author: raven 80778915raventu@gmail.com
  * @Date: 2022-07-25 17:42:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 11:23:03
+ * @LastEditTime: 2023-07-12 11:06:56
  * @FilePath: /cq-green-magpies-app/store/useAppStore.ts
  * @Description:  全局 store
  */
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 // 全局 store
 export const useAppStore = defineStore('appStore', () => {
@@ -24,3 +24,6 @@ export const useAppStore = defineStore('appStore', () => {
     setWsc,
   }
 })
+
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useAppStore, import.meta.hot))

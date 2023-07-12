@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 17:00:32
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-11 17:57:05
+ * @LastEditTime: 2023-07-12 15:38:06
  * @FilePath: /cq-green-magpies-app/server/api/auth/login.post.ts
  * @Description: 用户注册接口
  */
@@ -32,7 +32,16 @@ export default defineEventHandler(async (event) => {
     const { JWTSECRET } = useRuntimeConfig()
     const { id, name, password } = body
     const res = await getUserInfo({ id, user_name: name, password })
+
+    if (!res)
+      return responseObject(400, '用户名或密码错误', {})
+
     const token = jwt.sign({ name: res.user_name }, JWTSECRET, { expiresIn: '1d' })
+
+    setCookie(event, 'accessToken', token, {
+      httpOnly: false,
+      maxAge: 60 * 60 * 24,
+    })
 
     return responseJson(200, 'ok', {
       name: res.user_name,
@@ -44,6 +53,6 @@ export default defineEventHandler(async (event) => {
     if (error.parent?.errno === 19)
       return responseObject(400, '用户名已存在', {})
     else
-      return responseObject(500, error, {})
+      return responseObject(500, 'server error', {})
   }
 })

@@ -1,35 +1,31 @@
 <!--
  * @Author: raventu
- * @Date: 2023-06-26 17:38:51
+ * @Date: 2023-07-12 10:55:02
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 10:55:19
- * @FilePath: /cq-green-magpies-app/components/Login/WS.vue
- * @Description: 登录框
+ * @LastEditTime: 2023-07-12 16:26:47
+ * @FilePath: /cq-green-magpies-app/components/Login/Passwd.vue
+ * @Description: 登录窗口
 -->
 <script lang='ts' setup>
-import { useAppStore } from '~/store/useAppStore'
+import { userLogin } from '~/api/user/index'
+import { useUserStore } from '~/store/useUserStore'
 
-const wsPath = ref<string>('192.168.1.218')
-const port = ref<number>(6800)
-const passwd = ref<string>('')
+const name = ref<string>('d80778915')
+const passwd = ref<string>('dd80778915')
 const checkBoxVal = ref<string[]>([])
 const connectLoading = ref<boolean>(false)
-const { setWsc } = useAppStore()
+
+const userStore = useUserStore()
 
 function handleConnect() {
   connectLoading.value = true
-  useFetch('/api/auth/connect', {
-    method: 'POST',
-    body: {
-      host: wsPath.value,
-      port: port.value,
-      accessToken: passwd.value,
-    },
+  userLogin({
+    name: name.value,
+    password: passwd.value,
   })
     .then((res) => {
-      const path = `ws://${wsPath.value}:${port.value}`
-      const wsc = new WebSocket(path)
-      setWsc(wsc)
+      if (res.code === 200)
+        userStore.setUserInfo(res.data)
       connectLoading.value = false
     })
     .catch((err) => {
@@ -46,15 +42,10 @@ function handleConnect() {
     dark="bg-gray-700"
   >
     <p class="text-2xl">
-      连接
+      登录
     </p>
 
-    <n-input-group class="flex-center">
-      <n-input v-model:value="wsPath" placeholder="127.0.0.1" round :style="{ width: '80%' }" />
-      <n-space align="center" :style="{ width: '20%' }">
-        <n-input-number v-model:value="port" :show-button="false" />
-      </n-space>
-    </n-input-group>
+    <n-input v-model:value="name" placeholder="127.0.0.1" round />
 
     <n-input v-model:value="passwd" type="password" show-password-on="click" placeholder="passwd" round>
       <template #prefix>

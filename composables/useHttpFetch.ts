@@ -14,7 +14,7 @@ function getBaseUrl() {
       baseURL = 'http://127.0.0.1:3000/'
     }
     else {
-      baseURL = 'http://127.0.0.1:3000/'
+      baseURL = '/'
     }
   }
   else {

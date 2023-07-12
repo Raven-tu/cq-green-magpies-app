@@ -2,11 +2,11 @@
  * @Author: raven 80778915raventu@gmail.com
  * @Date: 2022-07-25 17:42:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 15:25:56
+ * @LastEditTime: 2023-07-12 11:17:56
  * @FilePath: /cq-green-magpies-app/store/useChatStore.ts
  * @Description:  聊天 store
  */
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { TypeFriendItem, TypeGroupItem } from '@/api/cq'
 
 type TypeChatInfo = TypeFriendItem | TypeGroupItem
@@ -35,3 +35,6 @@ export const useChatStore = defineStore('chatStore', () => {
     getActiveChat,
   }
 })
+
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useChatStore, import.meta.hot))
