@@ -2,9 +2,9 @@
  * @Author: raventu
  * @Date: 2023-06-26 16:07:57
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 13:20:21
+ * @LastEditTime: 2023-07-12 10:44:31
  * @FilePath: /cq-green-magpies-app/components/MainNav.vue
- * @Description:
+ * @Description: 主导航栏
 -->
 <script lang='ts' setup>
 const router = useRouter()
@@ -28,7 +28,7 @@ function switchRoute(route: string) {
         <div class="i-carbon-chat-bot" />
       </button>
 
-      <button class="text-4xl !outline-none" @click="switchRoute('/start')">
+      <button class="text-4xl !outline-none" @click="switchRoute('/login')">
         <div class="i-carbon:login" />
       </button>
     </div>
