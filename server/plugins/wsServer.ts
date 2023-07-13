@@ -2,16 +2,36 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-11 17:56:40
+ * @LastEditTime: 2023-07-13 17:10:29
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
 import { WebSocketServer } from 'ws'
-
+import jwt from 'jsonwebtoken'
 import { WSLogs } from '~/server/utils/helper/logsHelper'
 
 export default defineNitroPlugin((nitroApp) => {
-  const wss = new WebSocketServer({ port: 4000 })
+  const wss = new WebSocketServer({
+    port: 4000,
+    verifyClient: ({ req }: any) => {
+      const { JWTSECRET } = useRuntimeConfig()
+      const accessToken = req.headers.cookie?.split(';').find((c: string) => c.trim().startsWith('accessToken='))
+      let user
+      console.log('[verifyClient] start validate')
+      // 如果token过期会爆TokenExpiredError
+      if (accessToken) {
+        try {
+          const tokenVal = accessToken.split('=')[1]
+          user = jwt.verify(tokenVal, JWTSECRET)
+        }
+        catch (e) {
+          return false
+        }
+      }
+
+      return !!user
+    },
+  })
   wss.on('connection', (ws) => {
     ws.on('error', console.error)
     // 客户端
@@ -35,5 +55,5 @@ export default defineNitroPlugin((nitroApp) => {
     ws.send(JSON.stringify(sendObj))
   })
   // 向 global 中添加 nuxt ws
-  global.wss = wss
+  globalThis.wss = wss
 })

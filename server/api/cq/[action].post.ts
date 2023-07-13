@@ -11,9 +11,9 @@ import Joi from 'joi'
 import { genEchoStr, responseJson, responseObject } from '~/server/utils/helper'
 
 export default defineEventHandler(async (event) => {
+  const reqAccessToken = getCookie(event, 'accessToken')
   const actionName = getRouterParam(event, 'action')
   const body = await readBody(event)
-
   // 校验数据joi
   const { action, params } = body
   const schema = Joi.object({
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     return responseJson(400, err.stack, {})
   }
 
-  const ws = new WebSocket('ws://localhost:4000')
+  const ws = new WebSocket('ws://localhost:4000', { headers: { cookie: `accessToken=${reqAccessToken}` } })
   const echoStr = genEchoStr()
 
   return new Promise((resolve) => {

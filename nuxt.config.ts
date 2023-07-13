@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 16:58:55
+ * @LastEditTime: 2023-07-13 17:23:29
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
@@ -35,6 +35,11 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     JWTSECRET: 'jLmbfXUz897WgG',
+    cqConfig: {
+      host: '192.168.1.218',
+      port: '6800',
+      accessToken: '',
+    },
   },
 
   routeRules: {

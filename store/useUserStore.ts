@@ -2,7 +2,7 @@
  * @Author: raven 80778915raventu@gmail.com
  * @Date: 2022-07-25 17:42:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 15:34:11
+ * @LastEditTime: 2023-07-13 18:27:58
  * @FilePath: /cq-green-magpies-app/store/useUserStore.ts
  * @Description: 用户 store
  */
@@ -20,11 +20,18 @@ export const useUserStore = defineStore('userStore', () => {
 
   const getAccessToken = () => useCookie('accessToken').value
 
+  const cleanUserInfo = () => {
+    userInfo.value = null
+    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+    navigateTo('/login')
+  }
+
   return {
     userInfo,
     setUserInfo,
     getUserInfo,
     getAccessToken,
+    cleanUserInfo,
   }
 })
 

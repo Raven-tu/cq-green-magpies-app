@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-12 10:55:02
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 16:26:47
+ * @LastEditTime: 2023-07-13 18:30:50
  * @FilePath: /cq-green-magpies-app/components/Login/Passwd.vue
  * @Description: 登录窗口
 -->
@@ -26,10 +26,20 @@ function handleConnect() {
     .then((res) => {
       if (res.code === 200)
         userStore.setUserInfo(res.data)
-      connectLoading.value = false
+    })
+    .then(async () => {
+      const { code } = await $fetch('/api/auth/connect', {
+        method: 'GET',
+      })
+      if (code === 200)
+        navigateTo('/chat')
+      else
+        throw new Error('连接失败')
     })
     .catch((err) => {
       console.log(err)
+      userStore.cleanUserInfo()
+    }).finally(() => {
       connectLoading.value = false
     })
 }

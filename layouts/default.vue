@@ -2,13 +2,30 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 13:08:37
+ * @LastEditTime: 2023-07-13 18:30:15
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description:
 -->
 
 <script lang="ts" setup>
 import StatusButtonBar from '~/components/Status/ButtonBar.vue'
+import { useUserStore } from '~/store/useUserStore'
+import { checkUserInfo } from '~/api/user/index'
+
+const userStore = useUserStore()
+
+async function checkCookie() {
+  const res = await checkUserInfo()
+  if (res.code === 200)
+    userStore.setUserInfo(res.data)
+  else
+    userStore.cleanUserInfo()
+}
+
+onMounted(() => {
+  // console.log('mounted')
+  checkCookie()
+})
 </script>
 
 <template>

@@ -2,38 +2,28 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-08 01:19:17
- * @FilePath: /cq-green-magpies-app/server/api/auth/connect.post.ts
- * @Description:
+ * @LastEditTime: 2023-07-13 18:34:15
+ * @FilePath: /cq-green-magpies-app/server/api/auth/connect.get.ts
+ * @Description: 连接到 nuxt ws
  */
-import Joi from 'joi'
 import WebSocket from 'ws'
-import { responseJson } from '~/server/utils/helper'
 import { testWs2cq } from '~/server/utils/ws/ws2cq'
 
 export default defineEventHandler(async (event) => {
-  // 获取 query
-  const body = await readBody(event)
-  const { host, prefix, port, accessToken } = body
-  // 校验数据joi
-  const schema = Joi.object({
-    host: Joi.string().required()
-      .pattern(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/),
-    port: Joi.number().optional().default(6800),
-    accessToken: Joi.string().optional().default('').allow(''),
-  })
-  try {
-    await schema.validateAsync(body)
-  }
-  catch (err: any) {
-    return responseJson(400, err.stack, {})
-  }
+  // 请求头中获取 cookie 中的 accessToken
+  const reqAccessToken = getCookie(event, 'accessToken')
+
+  // 已经连接转发ws
+  if (globalThis.ws)
+    return responseObject(200, 'is ready', {})
 
   try {
-    const [msg, botInstance] = await testWs2cq(host, port, accessToken)
+    // TODO: 从 DB 中获取
+    const { host, port, accessToken } = useRuntimeConfig().cqConfig
+    const [msg, botInstance] = await testWs2cq(host, Number(port), accessToken)
     // 向 global 中添加 cqBot
     globalThis.cqBot = botInstance
-    const ws = new WebSocket('ws://localhost:4000')
+    const ws = new WebSocket('ws://localhost:4000', { headers: { cookie: `accessToken=${reqAccessToken}` } })
     // 向 global 中添加 nuxt ws
     globalThis.ws = ws
 
@@ -70,12 +60,12 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    return responseJson(200, 'ok', {
+    return responseObject(200, 'ok', {
       host,
       msg,
     })
   }
   catch (error: any) {
-    return responseJson(400, error as string, {})
+    return responseObject(400, error.message, {})
   }
 })
