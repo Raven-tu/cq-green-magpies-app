@@ -7,12 +7,10 @@
  * @Description: 聊天窗口标题
 -->
 <script lang='ts' setup>
+import type { PropschatInfo } from '~/type/chat'
+
 const Props = defineProps<{
-  chatInfo: {
-    avatar: string
-    title: string
-    id: number
-  }
+  chatInfo: PropschatInfo
 }>()
 </script>
 

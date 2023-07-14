@@ -2,17 +2,15 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 15:21:57
+ * @LastEditTime: 2023-07-14 16:39:34
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
 <script lang='ts' setup>
+import type { PropschatInfo } from '~/type/chat'
+
 const Props = defineProps<{
-  chatInfo: {
-    avatar: string
-    title: string
-    id: number
-  }
+  chatInfo: PropschatInfo
 }>()
 </script>
 

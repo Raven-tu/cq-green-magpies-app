@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 09:29:53
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 15:27:17
+ * @LastEditTime: 2023-07-14 17:31:47
  * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
  * @Description: 聊天窗口
 -->
@@ -18,6 +18,7 @@ const { getActiveChat } = useChatStore()
 
 const chatInfo = computed(() => {
   return {
+    type: activeChatType.value !== 'empty' ? activeChatType.value : 'private' as 'private' | 'group',
     avatar: activeChatType.value === 'group' ? `https://p.qlogo.cn/gh/${getActiveChat('group').group_id}/${getActiveChat('group').group_id}/0` : `https://q1.qlogo.cn/g?b=qq&s=0&nk=${getActiveChat('private').user_id}`,
     title: activeChatType.value === 'group' ? getActiveChat('group').group_name : getActiveChat('private').nickname,
     id: activeChatType.value === 'group' ? getActiveChat('group').group_id : getActiveChat('private').user_id,
@@ -26,13 +27,13 @@ const chatInfo = computed(() => {
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-1">
+  <div class="h-[calc(100vh-30px)] w-full flex flex-1 overflow-hidden">
     <!-- 非空 -->
     <div v-show="activeChatType !== 'empty'" class="flex flex-1 flex-col p-4">
       <!-- 头部信息 -->
       <Title :chat-info="chatInfo" />
       <!-- 聊天记录 -->
-      <History />
+      <History :chat-info="chatInfo" />
       <!-- 输入框 -->
       <Input :chat-info="chatInfo" />
     </div>

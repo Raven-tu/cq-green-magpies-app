@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 13:29:35
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 14:38:39
+ * @LastEditTime: 2023-07-14 17:00:16
  * @FilePath: /cq-green-magpies-app/components/Chat/Nav/Friend.vue
  * @Description: 好友列表
 -->
@@ -10,6 +10,7 @@
 import type { TypeFriendItem, TypeGroupItem } from '@/api/cq'
 import { getFriendList, getGroupList } from '@/api/cq'
 import { useChatStore } from '~/store/useChatStore'
+import { getQQGroupAvatar, getQQUserAvatar } from '~/utils/qq'
 
 const { setActiveChat } = useChatStore()
 const showContent = ref<boolean>(false)
@@ -74,7 +75,7 @@ onMounted(async () => {
           hover="bg-gray-300 dark:bg-gray-600"
         >
           <div class="friend-avatar h-15 w-15 overflow-hidden rounded-2xl">
-            <img :src="`https://q1.qlogo.cn/g?b=qq&s=0&nk=${item.user_id}`" alt="">
+            <img :src="getQQUserAvatar(item.user_id) " alt="">
           </div>
           <div class="flex flex-1 flex-col justify-start">
             <span>
@@ -96,7 +97,7 @@ onMounted(async () => {
           hover="bg-gray-300 dark:bg-gray-600"
         >
           <div class="friend-avatar h-15 w-15 overflow-hidden rounded-2xl">
-            <img :src="`https://p.qlogo.cn/gh/${item.group_id}/${item.group_id}/0`" alt="">
+            <img :src="getQQGroupAvatar(item.group_id) " alt="">
           </div>
           <div class="flex flex-1 flex-col justify-start">
             <span>
