@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-06-26 18:07:53
+ * @LastEditTime: 2023-07-14 11:10:51
  * @FilePath: /cq-green-magpies-app/app.vue
  * @Description: app entry
 -->
@@ -32,6 +32,7 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 html.dark {

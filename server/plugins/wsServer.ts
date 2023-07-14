@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 17:10:29
+ * @LastEditTime: 2023-07-14 10:52:52
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
@@ -11,8 +11,9 @@ import jwt from 'jsonwebtoken'
 import { WSLogs } from '~/server/utils/helper/logsHelper'
 
 export default defineNitroPlugin((nitroApp) => {
+  const wsServerPort = useAppConfig().wsServerPort
   const wss = new WebSocketServer({
-    port: 4000,
+    port: wsServerPort,
     verifyClient: ({ req }: any) => {
       const { JWTSECRET } = useRuntimeConfig()
       const accessToken = req.headers.cookie?.split(';').find((c: string) => c.trim().startsWith('accessToken='))

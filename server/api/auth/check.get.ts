@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 18:15:21
+ * @LastEditTime: 2023-07-14 09:43:04
  * @FilePath: /cq-green-magpies-app/server/api/auth/check.get.ts
  * @Description: 连接到 nuxt ws
  */
@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
     const { getUserInfo } = UserService
 
     const res = await getUserInfo({ user_name: name })
+
+    await $fetch('/api/auth/connect', { headers: { cookie: `accessToken=${reqAccessToken}` } })
 
     return responseObject(200, 'ok', {
       id: res.id,

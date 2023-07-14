@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 17:23:29
+ * @LastEditTime: 2023-07-14 10:35:31
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
@@ -31,6 +31,10 @@ export default defineNuxtConfig({
       'composables/**',
       'store',
     ],
+  },
+
+  appConfig: {
+    wsServerPort: 4000,
   },
 
   runtimeConfig: {

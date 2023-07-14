@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 18:30:15
+ * @LastEditTime: 2023-07-14 10:43:59
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description:
 -->
@@ -11,8 +11,10 @@
 import StatusButtonBar from '~/components/Status/ButtonBar.vue'
 import { useUserStore } from '~/store/useUserStore'
 import { checkUserInfo } from '~/api/user/index'
+import { useClientWsStore } from '~/store/useClientWsStore'
 
 const userStore = useUserStore()
+const clientWsStore = useClientWsStore()
 
 async function checkCookie() {
   const res = await checkUserInfo()
@@ -20,11 +22,14 @@ async function checkCookie() {
     userStore.setUserInfo(res.data)
   else
     userStore.cleanUserInfo()
+  return res.code === 200
 }
 
+const checkFlag = await checkCookie()
+
 onMounted(() => {
-  // console.log('mounted')
-  checkCookie()
+  if (checkFlag)
+    clientWsStore.initClientWs()
 })
 </script>
 

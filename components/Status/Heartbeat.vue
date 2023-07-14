@@ -1,21 +1,21 @@
 <!--
  * @Author: raventu
  * @Date: 2023-07-07 09:46:08
- * @LastEditors: raventu 
- * @LastEditTime: 2023-07-10 09:28:47
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-14 11:07:48
  * @FilePath: /cq-green-magpies-app/components/Status/Heartbeat.vue
  * @Description: CQ 心跳包 ping
 -->
 <script lang='ts' setup>
 import { storeToRefs } from 'pinia'
-import { useAppStore } from '~/store/useAppStore'
+import { useClientWsStore } from '~/store/useClientWsStore'
 
 interface TypeHeartBeatMsg {
   meta_event_type: 'heartbeat'
   time: number
 }
 
-const { wsc, connectFlag } = storeToRefs(useAppStore())
+const { clientWs, connectFlag } = storeToRefs(useClientWsStore())
 
 const pingNum = ref<number>(-1)
 const heartbeatMsg = ref<TypeHeartBeatMsg>({
@@ -34,12 +34,14 @@ function setPingNum() {
 const { pause, resume } = useIntervalFn(setPingNum, 5000)
 pause()
 watchOnce(connectFlag, () => {
-  if (wsc.value) {
-    resume()
-    wsc.value.onmessage = (event: MessageEvent) => {
-      const data = JSON.parse(event.data)
-      if (data.meta_event_type === 'heartbeat')
-        heartbeatMsg.value = data
+  if (clientWs.value?.status === 'OPEN') {
+    if (clientWs.value.ws) {
+      resume()
+      clientWs.value.ws.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data)
+        if (data.meta_event_type === 'heartbeat')
+          heartbeatMsg.value = data
+      }
     }
   }
 })

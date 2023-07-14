@@ -2,16 +2,21 @@
  * @Author: raventu
  * @Date: 2023-06-26 16:07:57
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 10:44:31
+ * @LastEditTime: 2023-07-14 11:14:31
  * @FilePath: /cq-green-magpies-app/components/MainNav.vue
  * @Description: 主导航栏
 -->
 <script lang='ts' setup>
+import { useUserStore } from '~/store/useUserStore'
+
 const router = useRouter()
+const { getAccessToken } = useUserStore()
 
 function switchRoute(route: string) {
   router.push(route)
 }
+
+const showLogin = computed(() => !getAccessToken())
 </script>
 
 <template>
@@ -28,7 +33,7 @@ function switchRoute(route: string) {
         <div class="i-carbon-chat-bot" />
       </button>
 
-      <button class="text-4xl !outline-none" @click="switchRoute('/login')">
+      <button v-show="showLogin" class="text-4xl !outline-none" @click="switchRoute('/login')">
         <div class="i-carbon:login" />
       </button>
     </div>
