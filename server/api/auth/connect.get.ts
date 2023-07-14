@@ -2,12 +2,15 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 18:34:15
+ * @LastEditTime: 2023-07-14 15:54:08
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.get.ts
  * @Description: 连接到 nuxt ws
  */
 import WebSocket from 'ws'
+import type { Events } from '@tsuk1ko/cq-websocket'
 import { testWs2cq } from '~/server/utils/ws/ws2cq'
+import ChatService from '~/server/service/chat.service'
+import { formatCQCtx } from '~/server/utils/helper/logsHelper'
 
 export default defineEventHandler(async (event) => {
   // 请求头中获取 cookie 中的 accessToken
@@ -32,10 +35,25 @@ export default defineEventHandler(async (event) => {
       const sendObj = { message: 'nuxt client onmessage', retCode: 200, userAgent: 'nuxt-client' }
       ws.send(JSON.stringify(sendObj))
     })
+    botInstance.on('message', (e, ctx, tags) => {
+      const [logsInfo] = formatCQCtx(ctx)
+      const { message_type, target_id } = logsInfo
+      // 保存聊天记录
+      ChatService.addChatLog(message_type, target_id, logsInfo)
+    })
     // 信息转发
-    // botInstance.on('message', (event, ctx) => {
-    //   ws.send(JSON.stringify(ctx))
-    // })
+    const actionArr: Events[] = ['message.private', 'message.group', 'message.group.@.me']
+
+    actionArr.forEach(name => botInstance.off(name))
+    // 管理员消息
+    // botInstance.on('message.private', () => ())
+    // 私聊
+    // botInstance.on('message.private', () => ())
+    // 群组@
+    // botInstance.on('message.group.@.me', () => ())
+    // 群组
+    // botInstance.on('message.group',  () => ())
+
     // 所有信息转发 用于日志
     botInstance.on('meta_event', (ctx) => {
       ws.send(JSON.stringify(ctx))

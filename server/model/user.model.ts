@@ -8,7 +8,7 @@
  */
 
 import { DataTypes } from 'sequelize'
-import seq from '~/server/utils/db/dbManger'
+import seq from '~/server/utils/db/dataDbManger'
 
 const User = seq.define('User', {
   user_name: {

@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 17:00:32
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 15:38:06
+ * @LastEditTime: 2023-07-14 14:58:02
  * @FilePath: /cq-green-magpies-app/server/api/auth/login.post.ts
  * @Description: 用户注册接口
  */
@@ -53,6 +53,6 @@ export default defineEventHandler(async (event) => {
     if (error.parent?.errno === 19)
       return responseObject(400, '用户名已存在', {})
     else
-      return responseObject(500, 'server error', {})
+      return responseObject(500, 'server error', error.message)
   }
 })

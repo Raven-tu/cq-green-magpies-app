@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-11 16:34:29
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 16:23:25
+ * @LastEditTime: 2023-07-14 13:28:06
  * @FilePath: /cq-green-magpies-app/server/middleware/token.ts
  * @Description: 权限校验
  */
@@ -21,8 +21,6 @@ export default defineEventHandler(async (event) => {
 
   // header中获取token
   try {
-    // const authorization = getHeader(event, 'authorization')
-    // const token = (authorization || '').replace('Bearer ', '')
     const token = getCookie(event, 'accessToken')
     const verify = jwt.verify(token ?? '', JWTSECRET)
     if (verify)
