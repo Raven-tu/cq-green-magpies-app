@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-26 16:07:57
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 11:14:31
+ * @LastEditTime: 2023-07-14 12:38:12
  * @FilePath: /cq-green-magpies-app/components/MainNav.vue
  * @Description: 主导航栏
 -->
@@ -16,7 +16,11 @@ function switchRoute(route: string) {
   router.push(route)
 }
 
-const showLogin = computed(() => !getAccessToken())
+const showLogin = ref(false)
+
+onMounted(() => {
+  showLogin.value = !getAccessToken()
+})
 </script>
 
 <template>

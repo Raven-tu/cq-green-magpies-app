@@ -2,20 +2,22 @@
  * @Author: raventu
  * @Date: 2023-07-05 13:29:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-07 12:43:52
+ * @LastEditTime: 2023-07-14 13:09:06
  * @FilePath: /cq-green-magpies-app/components/Sys/debug.vue
  * @Description:  系统-调试
 -->
 <script lang='ts' setup>
-import { useAppStore } from '~/store/useAppStore'
+import { storeToRefs } from 'pinia'
+import { useClientWsStore } from '~/store/useClientWsStore'
 
-const { wsc } = useAppStore()
-const logsHtml = ref('')
+const { clientWsInstance } = storeToRefs(useClientWsStore())
+const logs = ref<string[]>([])
 
 onMounted(() => {
-  if (wsc) {
-    wsc.onmessage = (event: MessageEvent) => {
-      logsHtml.value += `<p>【${new Date().toLocaleString()}】\n ${event.data}}</p>`
+  if (clientWsInstance?.value) {
+    clientWsInstance.value.onmessage = (event: MessageEvent) => {
+      console.log('【调试】', event.data)
+      logs.value.push(`【${new Date().toLocaleString()}】\n ${event.data}`)
     }
   }
 })
@@ -23,8 +25,12 @@ onMounted(() => {
 
 <template>
   <ClientOnly>
-    <n-card title="日志" style="margin-bottom: 16px">
-      <p class="h-full w-full flex flex-col overflow-y-scroll space-y-2" v-html="logsHtml" />
+    <n-card title="日志" class="h-full">
+      <div class="h-70vh w-full flex flex-col overflow-y-scroll space-y-2">
+        <p v-for="(item, index) in logs" :key="index">
+          {{ item }}
+        </p>
+      </div>
     </n-card>
   </ClientOnly>
 </template>

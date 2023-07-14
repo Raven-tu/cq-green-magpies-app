@@ -2,18 +2,19 @@
  * @Author: raventu
  * @Date: 2023-07-14 09:59:37
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 11:16:46
+ * @LastEditTime: 2023-07-14 12:31:38
  * @FilePath: /cq-green-magpies-app/store/useClientWsStore.ts
  * @Description: 客户端 ws store
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { useWebSocket } from '@vueuse/core'
 
 export const useClientWsStore = defineStore('clientWsStore', () => {
   const connectFlag = ref(false)
   const host = ref<string>('')
   const port = useAppConfig().wsServerPort
   const wsPath = computed(() => `ws://${host.value}:${port}`)
-  const clientWs = ref<Ref< ReturnType<typeof useWebSocket> > | null>(null)
+  const clientWs = ref<ReturnType<typeof useWebSocket> | null>(null)
   const clientWsInstance = computed(() => clientWs.value?.ws)
 
   const initClientWs = () => {
@@ -22,6 +23,8 @@ export const useClientWsStore = defineStore('clientWsStore', () => {
         connectFlag.value = true
       },
     })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     clientWs.value = ws
   }
 
