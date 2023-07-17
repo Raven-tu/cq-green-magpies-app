@@ -2,7 +2,7 @@
  * @Author: raven 80778915raventu@gmail.com
  * @Date: 2022-07-25 17:42:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 11:17:56
+ * @LastEditTime: 2023-07-17 15:18:12
  * @FilePath: /cq-green-magpies-app/store/useChatStore.ts
  * @Description:  聊天 store
  */
@@ -15,6 +15,8 @@ type TypeChatInfo = TypeFriendItem | TypeGroupItem
 export const useChatStore = defineStore('chatStore', () => {
   const activeChat = ref<TypeChatInfo | null>(null)
 
+  const activeChatSet = ref<Set<TypeChatInfo>>(new Set())
+
   const activeChatType = computed(() => {
     if (!activeChat.value)
       return 'empty'
@@ -23,6 +25,9 @@ export const useChatStore = defineStore('chatStore', () => {
   })
 
   const getActiveChat = <T extends 'group' | 'private'>(type: T) => {
+    if (activeChat.value)
+      activeChatSet.value.add(activeChat.value)
+
     return (activeChat.value ?? {}) as (T extends 'group' ? TypeGroupItem : TypeFriendItem)
   }
 
@@ -30,6 +35,7 @@ export const useChatStore = defineStore('chatStore', () => {
 
   return {
     activeChat,
+    activeChatSet,
     activeChatType,
     setActiveChat,
     getActiveChat,

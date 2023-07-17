@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 13:29:35
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 17:00:16
+ * @LastEditTime: 2023-07-17 16:02:44
  * @FilePath: /cq-green-magpies-app/components/Chat/Nav/Friend.vue
  * @Description: 好友列表
 -->
@@ -12,12 +12,30 @@ import { getFriendList, getGroupList } from '@/api/cq'
 import { useChatStore } from '~/store/useChatStore'
 import { getQQGroupAvatar, getQQUserAvatar } from '~/utils/qq'
 
+const Props = defineProps<{
+  filter: string
+}>()
+
 const { setActiveChat } = useChatStore()
 const showContent = ref<boolean>(false)
 const friendList = ref<TypeFriendItem[]>([])
 const groupList = ref<TypeGroupItem[]>([])
 
 const contentLength = computed(() => friendList.value.length + groupList.value.length)
+const filterFriendList = computed(() => {
+  return friendList.value.filter((item) => {
+    return [item.remark, item.nickname, `${item.user_id}`].some((value) => {
+      return value?.includes(Props.filter)
+    })
+  })
+})
+const filterGroupList = computed(() => {
+  return groupList.value.filter((item) => {
+    return [item.group_name, `${item.group_id}`].some((value) => {
+      return value?.includes(Props.filter)
+    })
+  })
+})
 
 function getFriendListFn() {
   return getFriendList().then(({ code, data }) => {
@@ -46,7 +64,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="max-h-[calc(85vh-80PX)] w-full overflow-y-auto rounded-2xl space-y-4">
+  <div class="w-full rounded-2xl space-y-4">
     <div
       class="flex justify-between rounded-2xl px-5 py-2" bg="gray-300 dark:gray-600"
       @click=" showContent = !showContent"
@@ -69,7 +87,7 @@ onMounted(async () => {
         </div>
       </div>
       <!-- 个人 -->
-      <div v-for="(item, index) in friendList" :key="index" @click="setActiveChat(item)">
+      <div v-for="(item, index) in filterFriendList" :key="index" @click="setActiveChat(item)">
         <div
           class="group flex justify-between rounded-2xl px-5 py-2 space-x-2" transition="all 0.3s ease-in-out"
           hover="bg-gray-300 dark:bg-gray-600"
@@ -91,7 +109,7 @@ onMounted(async () => {
         </div>
       </div>
       <!-- 群组 -->
-      <div v-for="(item, index) in groupList" :key="index" @click="setActiveChat(item)">
+      <div v-for="(item, index) in filterGroupList" :key="index" @click="setActiveChat(item)">
         <div
           class="group flex justify-between rounded-2xl px-5 py-2 space-x-2" transition="all 0.3s ease-in-out"
           hover="bg-gray-300 dark:bg-gray-600"
@@ -112,6 +130,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style lang='less' scoped>
-</style>

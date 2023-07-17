@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 09:29:53
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 17:31:47
+ * @LastEditTime: 2023-07-17 15:35:27
  * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
  * @Description: 聊天窗口
 -->
@@ -27,7 +27,7 @@ const chatInfo = computed(() => {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-30px)] w-full flex flex-1 overflow-hidden">
+  <div class="h-full w-full flex flex-1 overflow-hidden">
     <!-- 非空 -->
     <div v-show="activeChatType !== 'empty'" class="flex flex-1 flex-col p-4">
       <!-- 头部信息 -->
