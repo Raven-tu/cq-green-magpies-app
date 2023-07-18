@@ -41,9 +41,6 @@ dependencies:
   sqlite3:
     specifier: ^5.1.6
     version: 5.1.6
-  useJwt:
-    specifier: link:@vueuse/integrations/useJwt
-    version: link:@vueuse/integrations/useJwt
   winston:
     specifier: ^3.9.0
     version: 3.9.0

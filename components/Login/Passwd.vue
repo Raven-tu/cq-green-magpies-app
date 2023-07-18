@@ -2,20 +2,37 @@
  * @Author: raventu
  * @Date: 2023-07-12 10:55:02
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-13 18:30:50
+ * @LastEditTime: 2023-07-18 09:48:33
  * @FilePath: /cq-green-magpies-app/components/Login/Passwd.vue
  * @Description: 登录窗口
 -->
 <script lang='ts' setup>
 import { userLogin } from '~/api/user/index'
 import { useUserStore } from '~/store/useUserStore'
+import { xorStrings } from '~/utils/encrypt'
 
-const name = ref<string>('d80778915')
-const passwd = ref<string>('dd80778915')
+const name = ref<string>('')
+const passwd = ref<string>('')
 const checkBoxVal = ref<string[]>([])
 const connectLoading = ref<boolean>(false)
 
 const userStore = useUserStore()
+
+const state = ref('')
+
+function handleLoginSuccess() {
+  // 保存账户和密码
+  const userInfo = {
+    name64: name.value,
+    passwd64: passwd.value,
+    autologin: checkBoxVal.value.includes('autoLogin'),
+    savepasswd: checkBoxVal.value.includes('savePasswd'),
+  }
+  const OXRUserInfo = xorStrings(JSON.stringify(userInfo), 'SecretKey')
+  localStorage.setItem('userInfo64', OXRUserInfo)
+
+  navigateTo('/chat')
+}
 
 function handleConnect() {
   connectLoading.value = true
@@ -32,7 +49,7 @@ function handleConnect() {
         method: 'GET',
       })
       if (code === 200)
-        navigateTo('/chat')
+        handleLoginSuccess()
       else
         throw new Error('连接失败')
     })
@@ -43,6 +60,33 @@ function handleConnect() {
       connectLoading.value = false
     })
 }
+
+function checkStorage() {
+  const { name64, passwd64, autologin, savepasswd } = JSON.parse(state.value || '{}')
+
+  if (name64 && passwd64) {
+    name.value = name64
+    passwd.value = passwd64
+    if (autologin)
+      checkBoxVal.value.push('autoLogin')
+    if (savepasswd)
+      checkBoxVal.value.push('savePasswd')
+  }
+}
+
+function checkAutoLogin() {
+  const { autologin } = JSON.parse(state.value || '{}')
+
+  if (autologin)
+    handleConnect()
+}
+
+onMounted(() => {
+  state.value = xorStrings(localStorage.getItem('userInfo64') || '{}', 'SecretKey')
+
+  checkStorage()
+  checkAutoLogin()
+})
 </script>
 
 <template>
