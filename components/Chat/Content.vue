@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 09:29:53
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-17 15:35:27
+ * @LastEditTime: 2023-07-19 11:31:00
  * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
  * @Description: 聊天窗口
 -->
@@ -13,6 +13,7 @@ import Input from '~/components/Chat/Content/Input.vue'
 import History from '~/components/Chat/Content/History.vue'
 import { useChatStore } from '~/store/useChatStore'
 import type { LogsChatInfo } from '~/type/CQ'
+
 const { activeChatType } = storeToRefs(useChatStore())
 const { getActiveChat } = useChatStore()
 
@@ -30,9 +31,9 @@ const chatInfo = computed(() => {
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-1 overflow-hidden">
+  <div class="h-[calc(100vh-30px)] w-full flex flex-1 overflow-hidden">
     <!-- 非空 -->
-    <div v-show="activeChatType !== 'empty'" class="flex flex-1 flex-col p-4">
+    <div v-show="activeChatType !== 'empty'" class="flex flex-1 flex-col overflow-hidden p-4">
       <!-- 头部信息 -->
       <Title :chat-info="chatInfo" />
       <!-- 聊天记录 -->

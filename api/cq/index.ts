@@ -2,13 +2,14 @@
  * @Author: raventu
  * @Date: 2023-07-07 17:41:18
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 10:36:26
+ * @LastEditTime: 2023-07-19 11:29:13
  * @FilePath: /cq-green-magpies-app/api/cq/index.ts
  * @Description: api-用户相关
  */
 
 import type { commmonFetchRes } from '~/api/aptTemplet'
 import { commenReq } from '~/api/aptTemplet'
+import type { TypeLoginInfo } from '~/store/useUserStore'
 
 interface cqReqParams {
   action: string
@@ -150,4 +151,11 @@ export function sendPrivateMsg(user_id: number, message = '') {
   //     "message_id": 592710910
   // }
   return cqApiReq({ action: 'send_private_msg', params }) as commmonFetchRes<{ message_id: number }>
+}
+
+/**
+ * @description cq-获取登录信息
+ */
+export function getLoginInfo() {
+  return cqApiReq({ action: 'get_login_info' }) as commmonFetchRes<TypeLoginInfo>
 }
