@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 17:41:18
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 16:42:36
+ * @LastEditTime: 2023-07-19 10:28:22
  * @FilePath: /cq-green-magpies-app/api/chat/index.ts
  * @Description: 聊天相关 api
  */
@@ -32,4 +32,16 @@ export function getChatLogs(type: 'group' | 'private', id: number, page = 1, pag
     rows: LogsChatInfo[]
     count: number
   }>
+}
+
+export function addChatLogs(id: number, type: 'group' | 'private', chatInfo: LogsChatInfo) {
+  return commenReq({
+    path: '/api/chat/addChatLogs',
+    method: 'POST',
+    body: {
+      id,
+      type,
+      chatInfo,
+    },
+  }) as commmonFetchRes<void>
 }

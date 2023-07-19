@@ -4,7 +4,7 @@
  * @LastEditors: raventu
  * @LastEditTime: 2023-07-14 16:41:22
  * @FilePath: /cq-green-magpies-app/server/api/chat/getChatLogs.get.ts
- * @Description: 连接到 nuxt ws
+ * @Description: 获取聊天记录
  */
 import Joi from 'joi'
 import ChatService from '~/server/service/chat.service'

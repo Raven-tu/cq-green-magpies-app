@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 15:54:08
+ * @LastEditTime: 2023-07-19 10:27:00
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.get.ts
  * @Description: 连接到 nuxt ws
  */
@@ -31,10 +31,10 @@ export default defineEventHandler(async (event) => {
     globalThis.ws = ws
 
     // 设置相互转发
-    botInstance.once('message', () => {
-      const sendObj = { message: 'nuxt client onmessage', retCode: 200, userAgent: 'nuxt-client' }
-      ws.send(JSON.stringify(sendObj))
-    })
+    // botInstance.once('message', () => {
+    //   const sendObj = { message: 'nuxt client onmessage', retCode: 200, userAgent: 'nuxt-client' }
+    //   ws.send(JSON.stringify(sendObj))
+    // })
     botInstance.on('message', (e, ctx, tags) => {
       const [logsInfo] = formatCQCtx(ctx)
       const { message_type, target_id } = logsInfo

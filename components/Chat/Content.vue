@@ -12,9 +12,12 @@ import Title from '~/components/Chat/Content/Title.vue'
 import Input from '~/components/Chat/Content/Input.vue'
 import History from '~/components/Chat/Content/History.vue'
 import { useChatStore } from '~/store/useChatStore'
-
+import type { LogsChatInfo } from '~/type/CQ'
 const { activeChatType } = storeToRefs(useChatStore())
 const { getActiveChat } = useChatStore()
+
+const chatLogs = useState<LogsChatInfo[]>('chatLogs', () => [])
+provide('chatLogs', chatLogs)
 
 const chatInfo = computed(() => {
   return {
