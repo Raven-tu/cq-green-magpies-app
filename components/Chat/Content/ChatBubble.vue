@@ -16,10 +16,10 @@ import type { TypeLoginInfo } from '~/store/useUserStore'
 const Props = defineProps<{
   chatInfo: PropschatInfo
   chatLogs: LogsChatInfo
-  loginInfo: TypeLoginInfo
+  loginInfo: TypeLoginInfo | null
 }>()
 
-const isMysend = computed(() => Props.chatLogs.sender_id === Props.loginInfo.user_id)
+const isMysend = computed(() => Props.chatLogs.sender_id === Props.loginInfo?.user_id)
 
 function formatTime(time: string | number | Date) {
   return dayjs(time).format('YYYY/MM/DD HH:mm')
