@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-20 18:10:36
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-21 14:51:14
+ * @LastEditTime: 2023-07-24 10:05:42
  * @FilePath: /cq-green-magpies-app/server/plugins/CQconnect.ts
  * @Description:
  */
@@ -18,7 +18,7 @@ export default defineNitroPlugin(async (nitroApp) => {
 
   // TODO: 连接失败退出 nuxt 服务
   if (msg !== 'ok') {
-    console.log(msg)
+    console.error('cq-websocket 连接失败')
     process.exit() // 失效 无法退出
   }
 

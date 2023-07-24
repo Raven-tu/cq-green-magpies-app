@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 11:06:22
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 16:35:25
+ * @LastEditTime: 2023-07-24 10:05:16
  * @FilePath: /cq-green-magpies-app/server/utils/ws/ws2cq.ts
  * @Description:  用于测试 cq-websocket 的连接
  */
@@ -34,7 +34,7 @@ function testWs2cq(host: string, port: number, accessToken = ''): Promise<[strin
     bot
       .on('socket.connect', (wsType, sock, attempts) => {
         console.log(`连接成功[${wsType}]#${attempts}`)
-        resolve([`连接成功[${wsType}]#${attempts}`, bot])
+        resolve(['ok', bot])
       })
       .on('socket.failed', (wsType, attempts) => {
         console.log(`连接失败[${wsType}]#${attempts}`)
