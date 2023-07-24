@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-12 10:55:02
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-18 09:48:33
+ * @LastEditTime: 2023-07-24 10:47:54
  * @FilePath: /cq-green-magpies-app/components/Login/Passwd.vue
  * @Description: 登录窗口
 -->
@@ -18,7 +18,7 @@ const connectLoading = ref<boolean>(false)
 
 const userStore = useUserStore()
 
-const state = ref('')
+const state = ref('{}')
 
 function handleLoginSuccess() {
   // 保存账户和密码
@@ -83,7 +83,6 @@ function checkAutoLogin() {
 
 onMounted(() => {
   state.value = xorStrings(localStorage.getItem('userInfo64') || '{}', 'SecretKey')
-
   checkStorage()
   checkAutoLogin()
 })
@@ -99,11 +98,15 @@ onMounted(() => {
       登录
     </p>
 
-    <n-input v-model:value="name" placeholder="127.0.0.1" round />
+    <n-input v-model:value="name" placeholder="username" round>
+      <template #prefix>
+        <div class="i-material-symbols-account-circle" />
+      </template>
+    </n-input>
 
     <n-input v-model:value="passwd" type="password" show-password-on="click" placeholder="passwd" round>
       <template #prefix>
-        <div class="i-carbon-locked" />
+        <div class="i-material-symbols-lock" />
       </template>
     </n-input>
 

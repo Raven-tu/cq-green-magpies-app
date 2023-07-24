@@ -2,11 +2,16 @@
  * @Author: raventu
  * @Date: 2023-07-17 18:24:14
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-17 19:44:23
+ * @LastEditTime: 2023-07-24 10:39:24
  * @FilePath: /cq-green-magpies-app/utils/encrypt.ts
  * @Description: 加密工具
  */
+
+// 异或加密
 export function xorStrings(str1: string, str2: string): string {
+  // 如果输入参数不是字符串是 "{}" 或者 "[]" 则返回 {}" 或者 "[]"
+  if (str1 === '{}' || str1 === '[]')
+    return str1
   // 检查输入参数是否为字符串
   if (typeof str1 !== 'string' || typeof str2 !== 'string')
     throw new Error('输入参数必须是字符串')
