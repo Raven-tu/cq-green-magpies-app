@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-11 16:34:29
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 09:36:31
+ * @LastEditTime: 2023-07-25 13:07:13
  * @FilePath: /cq-green-magpies-app/server/middleware/token.ts
  * @Description: 权限校验
  */
@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
   }
   catch (error: any) {
     console.log(`token verify error ${error.name}`)
+    setResponseStatus(event, 401)
     switch (error.name) {
       case 'TokenExpiredError':
         return responseObject(401, 'token expired', {})

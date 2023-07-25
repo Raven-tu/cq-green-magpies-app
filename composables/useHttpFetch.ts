@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-29 18:24:35
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-24 18:24:44
+ * @LastEditTime: 2023-07-25 13:10:32
  * @FilePath: /cq-green-magpies-app/composables/useHttpFetch.ts
  * @Description: 请求封装
  */
@@ -84,15 +84,9 @@ export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {})
       console.log('request', request)
     },
     // 请求拦截器
-    async onResponse(ctx) {
-      const { response } = ctx
+    async onResponse({ response }) {
       const { code, msg } = typeof response._data === 'string' ? JSON.parse(response._data) : response._data
-      if (code === 401) {
-        message.error('登录过期，请重新登录')
-        await navigateTo('/start', { replace: true, redirectCode: 401 })
-        return response._data
-      }
-      else if (code === 400) {
+      if (code === 400) {
         message.error(msg)
         return response._data
       }
@@ -101,6 +95,12 @@ export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {})
       }
     },
     async onResponseError({ request, response, options }) {
+      if (response.status === 401) {
+        message.error('登录过期，请重新登录')
+        await navigateTo('/start', { replace: true, redirectCode: 401 })
+        return response._data
+      }
+      else
       // Handle the response errors 404
       if (response.status === 404) {
         message.error('请求的资源不存在')
