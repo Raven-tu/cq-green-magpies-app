@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     await schema.validateAsync(query)
   }
   catch (err: any) {
-    return responseJson(400, err.stack, {})
+    return responseObject(400, err.stack, {})
   }
 
   try {

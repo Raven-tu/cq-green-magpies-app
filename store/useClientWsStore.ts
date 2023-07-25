@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-14 09:59:37
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 12:31:38
+ * @LastEditTime: 2023-07-25 11:04:51
  * @FilePath: /cq-green-magpies-app/store/useClientWsStore.ts
  * @Description: 客户端 ws store
  */
@@ -14,11 +14,15 @@ export const useClientWsStore = defineStore('clientWsStore', () => {
   const host = ref<string>('')
   const port = useAppConfig().wsServerPort
   const wsPath = computed(() => `ws://${host.value}:${port}`)
+  const wsQuery = computed(() => {
+    const accessToken = useUserStore().getAccessToken()
+    return `?accessToken=${accessToken}`
+  })
   const clientWs = ref<ReturnType<typeof useWebSocket> | null>(null)
   const clientWsInstance = computed(() => clientWs.value?.ws)
 
   const initClientWs = () => {
-    const ws = useWebSocket(wsPath.value, {
+    const ws = useWebSocket(wsPath.value + wsQuery.value, {
       onConnected: () => {
         connectFlag.value = true
       },

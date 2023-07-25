@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-11 16:34:29
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 13:28:06
+ * @LastEditTime: 2023-07-25 09:36:31
  * @FilePath: /cq-green-magpies-app/server/middleware/token.ts
  * @Description: 权限校验
  */
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   // header中获取token
   try {
-    const token = getCookie(event, 'accessToken')
+    const token = event.node.req.headers.authorization?.split(' ')[1]
     const verify = jwt.verify(token ?? '', JWTSECRET)
     if (verify)
       event.context.user = verify
@@ -30,9 +30,9 @@ export default defineEventHandler(async (event) => {
     console.log(`token verify error ${error.name}`)
     switch (error.name) {
       case 'TokenExpiredError':
-        return responseObject(401, 'User login has expired', {})
+        return responseObject(401, 'token expired', {})
       case 'JsonWebTokenError':
-        return responseObject(401, 'Invalid Token', {})
+        return responseObject(401, 'token corroded', {})
       default:
         return responseObject(401, error.message, {})
     }

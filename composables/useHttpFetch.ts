@@ -1,9 +1,42 @@
-import { callWithNuxt } from 'nuxt/app'
+/*
+ * @Author: raventu
+ * @Date: 2023-06-29 18:24:35
+ * @LastEditors: raventu
+ * @LastEditTime: 2023-07-24 18:24:44
+ * @FilePath: /cq-green-magpies-app/composables/useHttpFetch.ts
+ * @Description: 请求封装
+ */
+import {
+  createDiscreteApi,
+} from 'naive-ui'
+import type { UseFetchOptions } from 'nuxt/app'
+import { defu } from 'defu'
 
-interface myFetchOptions {
+interface reqParams {
+  path: string
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'PATCH'
+  query?: Record<string, string>
+  body?: Record<string, any>
+  header?: any
+}
+
+interface FetchOptions {
   headers?: Record<string, string>
   [key: string]: any
 }
+
+export interface commmonFetchRes<T> {
+  data: T
+  msg: string // 错误信息返回描述
+  code: number // 接口请求状态
+  error?: {
+    errorMsg: string
+  }
+}
+
+const { message } = createDiscreteApi(
+  ['message'],
+)
 
 function getBaseUrl() {
   let baseURL = ''
@@ -24,100 +57,63 @@ function getBaseUrl() {
   return baseURL
 }
 
-export function useHttpFetch(url: string, opt: myFetchOptions) {
-  // token
+/**
+ * 通用 useFetch 请求模板
+ * @param  {reqParams} {path, method, query, body, header}
+ * @returns Promise {data, status}
+ */
+
+export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
   const accessToken = useCookie('accessToken')
-  // 添加请求头和token
-  const headers = {
-    ...opt.headers,
-    ...(accessToken.value ? { Authorization: `Bearer ${accessToken.value}` } : {}),
-  }
-  opt.headers = headers
-  const nuxtApp = useNuxtApp()
-  return useFetch(url, {
-    ...opt,
+  const defaults: UseFetchOptions<T> = {
     baseURL: getBaseUrl(), // 基本url
-    onRequest({ request, options }) {
-      console.log('request', request)
+    key: url,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
     },
+    onRequest({ request, options }) {
+      options.headers = {
+        ...options.headers,
+        ...(accessToken.value ? { Authorization: `Bearer ${accessToken.value}` } : {}),
+      }
+    },
+    // 响应拦截器
     onRequestError({ request, options, error }) {
       // Handle the request errors
       console.log('request', request)
     },
-    async onResponse({ request, response, options }) {
-      // Process the response data
-      // 自定义处理数据
-      // if (response._data.code === 0){
-      //    //处理
-      //     response._data = response._data.data
-      // }else{
-      //
-      // }
+    // 请求拦截器
+    async onResponse(ctx) {
+      const { response } = ctx
+      const { code, msg } = typeof response._data === 'string' ? JSON.parse(response._data) : response._data
+      if (code === 401) {
+        message.error('登录过期，请重新登录')
+        await navigateTo('/start', { replace: true, redirectCode: 401 })
+        return response._data
+      }
+      else if (code === 400) {
+        message.error(msg)
+        return response._data
+      }
+      else if (code === 200) {
+        return response
+      }
     },
     async onResponseError({ request, response, options }) {
-      // Handle the response errors
-      console.log('error', response.status)
-      // https://github.com/nuxt/nuxt/issues/14771
-      // 未登录401状态
-      if (response.status === 401) {
-        await callWithNuxt(nuxtApp, navigateTo, [
-          '/start',
-          { replace: true, redirectCode: 401 },
-        ])
+      // Handle the response errors 404
+      if (response.status === 404) {
+        message.error('请求的资源不存在')
+        return response._data
       }
+      // Handle the response errors 500
       else if (response.status === 500) {
-        console.log('服务器报错！！')
+        message.error('服务器错误')
+        return response._data
       }
     },
-  })
-}
 
-// 定义接口
-export function userInfoFetch(opt: myFetchOptions) {
-  return useHttpFetch('/user/info', opt)
-}
-// 注册接口
-export function registerFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/auth/register', opt)
-}
-// 登录接口
-export function loginFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/auth/login', opt)
-}
-// 文集接口
-
-export function notebookFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/note/notebook', opt)
-}
-
-// 获取文章
-export function notesFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/note/notes', opt)
-}
-// 新建文章
-export function noteFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/note/note', opt)
-}
-
-// 文章图片上传腾讯云
-export function cosAuthFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/cos/auth', opt)
-}
-
-// 获取文章列表
-export function homeNotesFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/home/notes', opt)
-}
-
-// 获取文章详情
-export function noteDetailFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/home/detail', opt)
-}
-// 上传头像到腾讯云
-export function uploadCosFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/uploadCos', opt)
-}
-// 修改用户信息
-export function editUserFetch(opt: myFetchOptions) {
-  return useHttpFetch('/api/auth/user', opt)
+  }
+  const params = defu(options, defaults)
+  return useFetch(url, params)
 }

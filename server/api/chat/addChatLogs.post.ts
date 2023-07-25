@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     await schema.validateAsync(body)
   }
   catch (err: any) {
-    return responseJson(400, err.stack, {})
+    return responseObject(400, err.stack, {})
   }
 
   try {

@@ -2,16 +2,17 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 13:25:10
+ * @LastEditTime: 2023-07-25 11:28:59
  * @FilePath: /cq-green-magpies-app/server/api/cq/[action].post.ts
  * @Description:
  */
 import WebSocket from 'ws'
 import Joi from 'joi'
-import { genEchoStr, responseJson, responseObject } from '~/server/utils/helper'
+import { genEchoStr, responseObject } from '~/server/utils/helper'
 
 export default defineEventHandler(async (event) => {
-  const reqAccessToken = getCookie(event, 'accessToken')
+  // 请求头中获取  accessToken
+  const reqAccessToken = getHeader(event, 'Authorization')
   const actionName = getRouterParam(event, 'action')
   const body = await readBody(event)
   // 校验数据joi
@@ -24,10 +25,14 @@ export default defineEventHandler(async (event) => {
     await schema.validateAsync(body)
   }
   catch (err: any) {
-    return responseJson(400, err.stack, {})
+    return responseObject(400, err.stack, {})
   }
-
-  const ws = new WebSocket('ws://localhost:4000', { headers: { cookie: `accessToken=${reqAccessToken}` } })
+  const wsQuery = () => {
+    const accessToken = ((reqAccessToken ?? '').replace('Bearer ', ''))
+    return `?accessToken=${accessToken}`
+  }
+  const wsPath = `ws://127.0.0.1:4000/${wsQuery()}`
+  const ws = new WebSocket(wsPath)
   const echoStr = genEchoStr()
 
   return new Promise((resolve) => {
@@ -42,7 +47,7 @@ export default defineEventHandler(async (event) => {
           }
         }
         catch (e) {
-          return resolve(responseJson(400, e as string, {}))
+          return resolve(responseObject(400, e as string, {}))
         }
       })
 

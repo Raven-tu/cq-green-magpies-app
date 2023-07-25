@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 13:29:35
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-17 16:02:44
+ * @LastEditTime: 2023-07-24 16:25:41
  * @FilePath: /cq-green-magpies-app/components/Chat/Nav/Friend.vue
  * @Description: 好友列表
 -->
@@ -38,7 +38,8 @@ const filterGroupList = computed(() => {
 })
 
 function getFriendListFn() {
-  return getFriendList().then(({ code, data }) => {
+  return getFriendList().then((res) => {
+    const { code, data } = res.data.value ?? { code: 400, data: [] }
     code === 200
       ? friendList.value = data
       : friendList.value = []
@@ -48,7 +49,8 @@ function getFriendListFn() {
 }
 
 function getGroupListFn() {
-  return getGroupList().then(({ code, data }) => {
+  return getGroupList().then((res) => {
+    const { code, data } = res.data.value ?? { code: 400, data: [] }
     code === 200
       ? groupList.value = data
       : groupList.value = []

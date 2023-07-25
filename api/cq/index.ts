@@ -2,13 +2,13 @@
  * @Author: raventu
  * @Date: 2023-07-07 17:41:18
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 11:29:13
+ * @LastEditTime: 2023-07-24 16:22:12
  * @FilePath: /cq-green-magpies-app/api/cq/index.ts
  * @Description: api-用户相关
  */
 
-import type { commmonFetchRes } from '~/api/aptTemplet'
-import { commenReq } from '~/api/aptTemplet'
+import type { commmonFetchRes } from '~/composables/useHttpFetch'
+import { useCustomFetch } from '~/composables/useHttpFetch'
 import type { TypeLoginInfo } from '~/store/useUserStore'
 
 interface cqReqParams {
@@ -16,9 +16,8 @@ interface cqReqParams {
   params?: Record<string, any>
 }
 
-export function cqApiReq({ action, params = {} }: cqReqParams) {
-  return commenReq({
-    path: `/api/cq/${action}`,
+export function cqApiReq<T>({ action, params = {} }: cqReqParams) {
+  return useCustomFetch<commmonFetchRes<T>>(`/api/cq/${action}`, {
     method: 'POST',
     body: {
       action,
@@ -39,7 +38,7 @@ export interface TypeFriendItem {
  * @returns  cq-获取好友列表
  */
 export function getFriendList() {
-  return cqApiReq({ action: 'get_friend_list' }) as commmonFetchRes<TypeFriendItem[]>
+  return cqApiReq<TypeFriendItem[]>({ action: 'get_friend_list' })
 }
 /**
  * @description: cq-获取群组列表-类型
@@ -57,7 +56,7 @@ export interface TypeGroupItem {
  * @returns  cq-获取群组列表
  */
 export function getGroupList() {
-  return cqApiReq({ action: 'get_group_list' }) as commmonFetchRes<TypeGroupItem[]>
+  return cqApiReq<TypeGroupItem[]>({ action: 'get_group_list' })
 }
 
 export type ChatType = 'private' | 'group'
@@ -102,7 +101,7 @@ export function getMessages(message_id: number) {
   const params = {
     message_id,
   }
-  return cqApiReq({ action: 'get_msg', params }) as commmonFetchRes<TypeMessageItem>
+  return cqApiReq<TypeMessageItem>({ action: 'get_msg', params })
 }
 
 /**
@@ -126,7 +125,7 @@ export function sendGroupMsg(group_id: number, message = '') {
   // {
   //     "message_id": 592710910
   // }
-  return cqApiReq({ action: 'send_group_msg', params }) as commmonFetchRes<{ message_id: number }>
+  return cqApiReq<{ message_id: number }>({ action: 'send_group_msg', params })
 }
 
 /**
@@ -150,12 +149,12 @@ export function sendPrivateMsg(user_id: number, message = '') {
   // {
   //     "message_id": 592710910
   // }
-  return cqApiReq({ action: 'send_private_msg', params }) as commmonFetchRes<{ message_id: number }>
+  return cqApiReq<{ message_id: number }>({ action: 'send_private_msg', params })
 }
 
 /**
  * @description cq-获取登录信息
  */
 export function getLoginInfo() {
-  return cqApiReq({ action: 'get_login_info' }) as commmonFetchRes<TypeLoginInfo>
+  return cqApiReq<TypeLoginInfo>({ action: 'get_login_info' })
 }

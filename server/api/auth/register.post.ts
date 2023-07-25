@@ -23,14 +23,14 @@ export default defineEventHandler(async (event) => {
     await schema.validateAsync(body)
   }
   catch (err: any) {
-    return responseJson(400, err.stack, {})
+    return responseObject(400, err.message, {})
   }
   //
   try {
     const { createUser } = UserService
     const { name, password } = body
     const res = await createUser(name, password)
-    return responseJson(200, 'ok', { name: res.user_name, id: res.id })
+    return responseObject(200, 'ok', { name: res.user_name, id: res.id })
   }
   catch (error: any) {
     if (error.parent.errno === 19)

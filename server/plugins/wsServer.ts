@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 10:52:52
+ * @LastEditTime: 2023-07-25 12:20:07
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
@@ -16,14 +16,19 @@ export default defineNitroPlugin((nitroApp) => {
     port: wsServerPort,
     verifyClient: ({ req }: any) => {
       const { JWTSECRET } = useRuntimeConfig()
-      const accessToken = req.headers.cookie?.split(';').find((c: string) => c.trim().startsWith('accessToken='))
+
+      const queryArr = req.url?.split('?')[1].split('&').map((item: string) => {
+        const [key, value] = item.split('=')
+        return { [key]: value }
+      })
+
+      const accessToken = queryArr.find((item: any) => item.accessToken)?.accessToken ?? ''
       let user
       console.log('[verifyClient] start validate')
-      // 如果token过期会爆TokenExpiredError
+      // 如果token过期会TokenExpiredError
       if (accessToken) {
         try {
-          const tokenVal = accessToken.split('=')[1]
-          user = jwt.verify(tokenVal, JWTSECRET)
+          user = jwt.verify(accessToken, JWTSECRET)
         }
         catch (e) {
           return false
@@ -33,6 +38,7 @@ export default defineNitroPlugin((nitroApp) => {
       return !!user
     },
   })
+  
   wss.on('connection', (ws) => {
     ws.on('error', console.error)
     // 客户端

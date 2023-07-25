@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 11:16:01
+ * @LastEditTime: 2023-07-24 16:37:01
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description:
 -->
@@ -18,19 +18,21 @@ const userStore = useUserStore()
 const clientWsStore = useClientWsStore()
 
 async function checkCookie() {
-  const res = await checkUserInfo()
-  if (res.code === 200)
-    userStore.setUserInfo(res.data)
+  const { data } = await checkUserInfo()
+  if (data.value?.code === 200)
+    userStore.setUserInfo(data.value.data)
   else
     userStore.cleanUserInfo()
-  return res.code === 200
+  return data.value?.code === 200
 }
 
 const checkFlag = await checkCookie()
 
 // 获取登录信息
-const loginData = await getLoginInfo()
-userStore.setLoginInfo(loginData.data)
+const { data: loginData } = await getLoginInfo()
+
+if (loginData.value)
+  userStore.setLoginInfo(loginData.value?.data)
 
 onMounted(() => {
   if (checkFlag)

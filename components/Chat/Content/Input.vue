@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 10:41:57
+ * @LastEditTime: 2023-07-24 16:32:53
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
@@ -39,10 +39,20 @@ function addReceivedMsg2ChatLogs(msgInfo: TypeMessageItem, target_id: number) {
 
 async function sendMsg() {
   console.log('send')
-  const sentMsg = Props.chatInfo.type === 'group' ? await sendGroupMsg(Props.chatInfo.id, msgInput.value) : await sendPrivateMsg(Props.chatInfo.id, msgInput.value)
+  const { data: sentMsg } = Props.chatInfo.type === 'group' ? await sendGroupMsg(Props.chatInfo.id, msgInput.value) : await sendPrivateMsg(Props.chatInfo.id, msgInput.value)
   console.log(sentMsg)
-  const receivedMsg = await getMessages(sentMsg.data.message_id)
-  const transMsg = addReceivedMsg2ChatLogs(receivedMsg.data, Props.chatInfo.id)
+
+  // 发送消息 失败return
+  if (!sentMsg.value)
+    return console.error('发送消息失败')
+
+  const { data: receivedMsg } = await getMessages(sentMsg.value?.data.message_id)
+
+  // 获取消息失败则 失败return
+  if (!receivedMsg.value)
+    return console.error('获取消息失败')
+
+  const transMsg = addReceivedMsg2ChatLogs(receivedMsg.value?.data, Props.chatInfo.id)
   addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
   msgInput.value = ''
 }

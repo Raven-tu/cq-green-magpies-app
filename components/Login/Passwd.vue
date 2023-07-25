@@ -2,12 +2,12 @@
  * @Author: raventu
  * @Date: 2023-07-12 10:55:02
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-24 10:47:54
+ * @LastEditTime: 2023-07-24 16:38:10
  * @FilePath: /cq-green-magpies-app/components/Login/Passwd.vue
  * @Description: 登录窗口
 -->
 <script lang='ts' setup>
-import { userLogin } from '~/api/user/index'
+import { checkConnect, userLogin } from '~/api/user/index'
 import { useUserStore } from '~/store/useUserStore'
 import { xorStrings } from '~/utils/encrypt'
 
@@ -41,20 +41,19 @@ function handleConnect() {
     password: passwd.value,
   })
     .then((res) => {
-      if (res.code === 200)
-        userStore.setUserInfo(res.data)
+      if (res.data.value?.code === 200)
+        userStore.setUserInfo(res.data.value.data)
+      else throw new Error('登录失败')
     })
     .then(async () => {
-      const { code } = await $fetch('/api/auth/connect', {
-        method: 'GET',
-      })
-      if (code === 200)
+      const { data } = await checkConnect()
+      if (data.value?.code === 200)
         handleLoginSuccess()
       else
         throw new Error('连接失败')
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
       userStore.cleanUserInfo()
     }).finally(() => {
       connectLoading.value = false

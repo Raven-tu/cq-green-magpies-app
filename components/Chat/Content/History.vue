@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-20 17:09:40
+ * @LastEditTime: 2023-07-24 16:19:47
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/History.vue
  * @Description: 消息历史记录
 -->
@@ -25,8 +25,8 @@ const reverseChatLogs = computed(() => Object.assign([], chatLogs.value).reverse
 // 监听聊天栏目切换
 watch(() => Props.chatInfo.id, async () => {
   chatLogs.value = []
-  const res = await getChatLogs(Props.chatInfo.type, Props.chatInfo.id, 1, 25)
-  chatLogs.value.push(...res.data.rows)
+  const {data} = await getChatLogs(Props.chatInfo.type, Props.chatInfo.id, 1, 25)
+  chatLogs.value.push(...data.value?.data.rows ?? [])
 })
 </script>
 
