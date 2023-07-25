@@ -2,10 +2,11 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-20 17:20:31
+ * @LastEditTime: 2023-07-25 13:32:46
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description:
  */
+import { isDevelopment } from 'std-env'
 import { pwa } from './config/pwa'
 import { appDescription } from './constants/index'
 
@@ -38,7 +39,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    JWTSECRET: 'jLmbfXUz897WgG',
+    JWTSECRET: isDevelopment ? 'jLmbfXUz897WgG' : `${Math.random().toString(36).substring(2, 7)}`,
     cqConfig: {
       host: '192.168.1.218',
       port: '6800',
@@ -84,15 +85,18 @@ export default defineNuxtConfig({
       },
     },
     prerender: {
-      crawlLinks: false,
-      routes: ['/'],
-      ignore: ['/hi'],
+      crawlLinks: true,
     },
   },
 
+  sourcemap: isDevelopment,
+
   app: {
     head: {
-      viewport: 'width=device-width,initial-scale=1',
+      viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
+      bodyAttrs: {
+        class: 'overflow-x-hidden',
+      },
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
         { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
@@ -104,7 +108,7 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       script: [
-        { src: 'https://cdn.jsdelivr.net/npm/spacingjs', type: 'text/javascript', defer: true },
+        { ...(isDevelopment && { src: 'https://cdn.jsdelivr.net/npm/spacingjs', type: 'text/javascript', defer: true }) },
       ],
     },
   },
