@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 12:31:29
+ * @LastEditTime: 2023-07-25 13:06:27
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.get.ts
  * @Description: 连接到 nuxt ws
  */
@@ -31,11 +31,6 @@ export default defineEventHandler(async (event) => {
     //   const sendObj = { message: 'nuxt client onmessage', retCode: 200, userAgent: 'nuxt-client' }
     //   ws.send(JSON.stringify(sendObj))
     // })
-
-    ws.on('error', (err) => {
-      err
-      debugger
-    })
 
     // 所有信息转发 用于日志
     botInstance?.on('meta_event', (ctx) => {
