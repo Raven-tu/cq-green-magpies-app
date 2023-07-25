@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 09:29:53
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 11:31:00
+ * @LastEditTime: 2023-07-25 14:11:53
  * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
  * @Description: 聊天窗口
 -->
@@ -19,6 +19,7 @@ const { getActiveChat } = useChatStore()
 
 const chatLogs = useState<LogsChatInfo[]>('chatLogs', () => [])
 provide('chatLogs', chatLogs)
+const sendMsgCount = useState<number>('sendMsgCount', () => 0)
 
 const chatInfo = computed(() => {
   return {
@@ -37,9 +38,9 @@ const chatInfo = computed(() => {
       <!-- 头部信息 -->
       <Title :chat-info="chatInfo" />
       <!-- 聊天记录 -->
-      <History :chat-info="chatInfo" />
+      <History :chat-info="chatInfo" :send-msg="sendMsgCount" />
       <!-- 输入框 -->
-      <Input :chat-info="chatInfo" />
+      <Input :chat-info="chatInfo" @on-send-msg="sendMsgCount++" />
     </div>
     <!-- 空 -->
     <div v-show="activeChatType === 'empty'" class="flex flex-1 flex-col items-center justify-center">

@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-24 16:32:53
+ * @LastEditTime: 2023-07-25 14:46:16
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
@@ -16,7 +16,7 @@ import type { LogsChatInfo } from '~/type/CQ'
 const Props = defineProps<{
   chatInfo: PropschatInfo
 }>()
-
+const emit = defineEmits(['onSendMsg'])
 const msgInput = ref('')
 const chatLogs = inject<Ref<LogsChatInfo[]>>('chatLogs', useState<LogsChatInfo[]>('chatLogs', () => []))
 
@@ -38,16 +38,12 @@ function addReceivedMsg2ChatLogs(msgInfo: TypeMessageItem, target_id: number) {
 }
 
 async function sendMsg() {
-  console.log('send')
   const { data: sentMsg } = Props.chatInfo.type === 'group' ? await sendGroupMsg(Props.chatInfo.id, msgInput.value) : await sendPrivateMsg(Props.chatInfo.id, msgInput.value)
-  console.log(sentMsg)
-
   // 发送消息 失败return
   if (!sentMsg.value)
     return console.error('发送消息失败')
 
   const { data: receivedMsg } = await getMessages(sentMsg.value?.data.message_id)
-
   // 获取消息失败则 失败return
   if (!receivedMsg.value)
     return console.error('获取消息失败')
@@ -55,13 +51,33 @@ async function sendMsg() {
   const transMsg = addReceivedMsg2ChatLogs(receivedMsg.value?.data, Props.chatInfo.id)
   addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
   msgInput.value = ''
+  emit('onSendMsg')
+}
+
+function handleKeyUp(e: KeyboardEvent) {
+  if (e.key === 'Enter' && !e.shiftKey)
+    sendMsg()
+  else if (e.key === 'Enter' && e.shiftKey)
+    msgInput.value += '\n'
 }
 </script>
 
 <template>
   <div class="w-full flex flex-center flex-row rounded-2xl bg-gray-200 p-2 space-x-2 dark:bg-gray-700">
     <!-- 输入框 -->
-    <input v-model="msgInput" class="h-8 w-full resize-y rounded-xl p-4 outline-none" bg="gray-300 dark:gray-600" type="text" @keyup.enter="sendMsg">
+    <n-input
+      v-model:value="msgInput"
+      placeholder=""
+      autofocus
+      round
+      clearable
+      type="textarea"
+      :autosize="{
+        minRows: 2,
+        maxRows: 5,
+      }"
+      @keyup="handleKeyUp"
+    />
     <!-- 发送按钮 -->
     <button
       class="flex-center"

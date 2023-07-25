@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 13:12:37
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-17 15:50:44
+ * @LastEditTime: 2023-07-25 14:01:49
  * @FilePath: /cq-green-magpies-app/components/Chat/Nav.vue
  * @Description: 聊天侧边栏
 -->
@@ -15,7 +15,7 @@ const filter = ref('')
 
 <template>
   <div
-    class="flex-0 h-[calc(100vh-30px)] w-300PX flex flex-col items-stretch justify-start overflow-y-auto p-4 space-y-4"
+    class="flex-0 h-[calc(100vh-30px)] w-300PX flex flex-col items-stretch justify-start overflow-y-scroll p-4 space-y-4"
     bg="gray-200 dark:gray-700"
   >
     <!-- 搜索 -->
@@ -23,7 +23,7 @@ const filter = ref('')
       <div class="w-full flex flex-center flex-row rounded-2xl bg-gray-200 p-2 space-x-2 dark:bg-gray-700">
         <!-- 输入框 -->
         <div class="i-material-symbols-search h-5 w-5" />
-        <input v-model="filter" class="h-8 w-full resize-y rounded-xl p-4 outline-none" bg="gray-300 dark:gray-600" type="text">
+        <input v-model="filter"  class="h-8 w-full resize-y rounded-xl p-4 outline-none" bg="gray-300 dark:gray-600" type="text">
       </div>
     </div>
     <!-- 保留对话 -->
