@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-26 16:07:57
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 18:02:25
+ * @LastEditTime: 2023-07-28 18:20:01
  * @FilePath: /cq-green-magpies-app/components/MainNav.vue
  * @Description: 主导航栏
 -->
@@ -37,9 +37,9 @@ onMounted(() => {
         <div class="i-carbon-chat-bot" />
       </button>
 
-      <button class="text-4xl !outline-none" @click="switchRoute('/setup')">
+      <!-- <button class="text-4xl !outline-none" @click="switchRoute('/setup')">
         <div class="i-carbon-categories" />
-      </button>
+      </button> -->
 
       <button v-show="showLogin" class="text-4xl !outline-none" @click="switchRoute('/login')">
         <div class="i-carbon:login" />
