@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-11 18:09:34
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-12 16:20:19
+ * @LastEditTime: 2023-07-28 17:56:23
  * @FilePath: /cq-green-magpies-app/middleware/guest-filter.ts
  * @Description: 过滤未登录用户
  */
@@ -10,7 +10,7 @@
 import { useJwt } from '@vueuse/integrations/useJwt'
 import { routerWhiteList } from '~/config/CT'
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const user = useCookie('accessToken').value ?? ''
   const { payload } = useJwt(user)
   const val = payload.value as unknown as { name: string; exp: number }

@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-11 17:51:08
+ * @LastEditTime: 2023-07-28 17:51:11
  * @FilePath: /cq-green-magpies-app/server/plugins/console.ts
  * @Description: 启动 pino 日志服务
  */
@@ -35,9 +35,9 @@ export default defineNitroPlugin(() => {
     ],
   })
 
-  global.console.log = (...args) => logger.info(...args)
-  global.console.warn = (...args) => logger.warn(...args)
-  global.console.error = (...args) => logger.error(...args)
+  globalThis.console.log = (...args) => logger.info(...args)
+  globalThis.console.warn = (...args) => logger.warn(...args)
+  globalThis.console.error = (...args) => logger.error(...args)
 
   // const getTime = () => new Date().toLocaleString()
   // const { log, warn, error } = console

@@ -84,7 +84,7 @@ function handleKeyUp(e: KeyboardEvent) {
       rounded-xl
       @click="sendMsg"
     >
-      <div class="i-material-symbols-send-outline dark:i-material-symbols-send h-5 w-5" />
+      <div class="i-material-symbols-send-outline h-5 w-5 dark:i-material-symbols-send" />
     </button>
   </div>
 </template>

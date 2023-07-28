@@ -119,7 +119,7 @@ onMounted(() => {
       </n-checkbox-group>
     </div>
 
-    <n-button type="primary" strong secondary round block :loading="connectLoading" @click="handleConnect">
+    <n-button type="primary" round strong secondary block :loading="connectLoading" @click="handleConnect">
       GO
     </n-button>
   </div>

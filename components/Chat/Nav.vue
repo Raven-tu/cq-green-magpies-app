@@ -23,7 +23,7 @@ const filter = ref('')
       <div class="w-full flex flex-center flex-row rounded-2xl bg-gray-200 p-2 space-x-2 dark:bg-gray-700">
         <!-- 输入框 -->
         <div class="i-material-symbols-search h-5 w-5" />
-        <input v-model="filter"  class="h-8 w-full resize-y rounded-xl p-4 outline-none" bg="gray-300 dark:gray-600" type="text">
+        <input v-model="filter" class="h-8 w-full resize-y rounded-xl p-4 outline-none" bg="gray-300 dark:gray-600" type="text">
       </div>
     </div>
     <!-- 保留对话 -->

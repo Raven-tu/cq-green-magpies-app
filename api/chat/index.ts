@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 17:41:18
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-24 16:15:01
+ * @LastEditTime: 2023-07-28 17:54:43
  * @FilePath: /cq-green-magpies-app/api/chat/index.ts
  * @Description: 聊天相关 api
  */
@@ -10,13 +10,6 @@
 import { useCustomFetch } from '~/composables/useHttpFetch'
 import type { commmonFetchRes } from '~/composables/useHttpFetch'
 import type { LogsChatInfo } from '~/type/CQ'
-
-/** 登录参数 */
-interface LoginParams {
-  id?: number
-  name: string
-  password: string
-}
 
 export function getChatLogs(type: 'group' | 'private', id: number, page = 1, pageSize = 10) {
   return useCustomFetch<commmonFetchRes<{

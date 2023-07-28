@@ -2,7 +2,7 @@
  * @Author: raven 80778915raventu@gmail.com
  * @Date: 2022-07-25 17:42:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-17 15:18:12
+ * @LastEditTime: 2023-07-28 17:50:50
  * @FilePath: /cq-green-magpies-app/store/useChatStore.ts
  * @Description:  聊天 store
  */
@@ -24,7 +24,7 @@ export const useChatStore = defineStore('chatStore', () => {
       return 'group_id' in activeChat.value ? 'group' : 'private'
   })
 
-  const getActiveChat = <T extends 'group' | 'private'>(type: T) => {
+  const getActiveChat = <T extends 'group' | 'private'>() => {
     if (activeChat.value)
       activeChatSet.value.add(activeChat.value)
 

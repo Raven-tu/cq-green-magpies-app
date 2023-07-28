@@ -2,28 +2,16 @@
  * @Author: raventu
  * @Date: 2023-06-29 18:24:35
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 13:10:32
+ * @LastEditTime: 2023-07-28 17:55:12
  * @FilePath: /cq-green-magpies-app/composables/useHttpFetch.ts
  * @Description: 请求封装
  */
+import process from 'node:process'
 import {
   createDiscreteApi,
 } from 'naive-ui'
 import type { UseFetchOptions } from 'nuxt/app'
 import { defu } from 'defu'
-
-interface reqParams {
-  path: string
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'PATCH'
-  query?: Record<string, string>
-  body?: Record<string, any>
-  header?: any
-}
-
-interface FetchOptions {
-  headers?: Record<string, string>
-  [key: string]: any
-}
 
 export interface commmonFetchRes<T> {
   data: T
@@ -72,14 +60,14 @@ export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {})
       'Content-Type': 'application/json',
       ...options.headers,
     },
-    onRequest({ request, options }) {
+    onRequest({ options }) {
       options.headers = {
         ...options.headers,
         ...(accessToken.value ? { Authorization: `Bearer ${accessToken.value}` } : {}),
       }
     },
     // 响应拦截器
-    onRequestError({ request, options, error }) {
+    onRequestError({ request }) {
       // Handle the request errors
       console.log('request', request)
     },
@@ -94,7 +82,7 @@ export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {})
         return response
       }
     },
-    async onResponseError({ request, response, options }) {
+    async onResponseError({ response }) {
       if (response.status === 401) {
         message.error('登录过期，请重新登录')
         await navigateTo('/start', { replace: true, redirectCode: 401 })
@@ -102,15 +90,15 @@ export function useCustomFetch<T>(url: string, options: UseFetchOptions<T> = {})
       }
       else
       // Handle the response errors 404
-      if (response.status === 404) {
-        message.error('请求的资源不存在')
-        return response._data
-      }
-      // Handle the response errors 500
-      else if (response.status === 500) {
-        message.error('服务器错误')
-        return response._data
-      }
+        if (response.status === 404) {
+          message.error('请求的资源不存在')
+          return response._data
+        }
+        // Handle the response errors 500
+        else if (response.status === 500) {
+          message.error('服务器错误')
+          return response._data
+        }
     },
 
   }

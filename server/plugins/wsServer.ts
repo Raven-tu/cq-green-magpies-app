@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-30 13:40:45
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 12:20:07
+ * @LastEditTime: 2023-07-28 17:55:55
  * @FilePath: /cq-green-magpies-app/server/plugins/wsServer.ts
  * @Description: 启动 ws 服务
  */
@@ -10,7 +10,7 @@ import { WebSocketServer } from 'ws'
 import jwt from 'jsonwebtoken'
 import { WSLogs } from '~/server/utils/helper/logsHelper'
 
-export default defineNitroPlugin((nitroApp) => {
+export default defineNitroPlugin(() => {
   const wsServerPort = useAppConfig().wsServerPort
   const wss = new WebSocketServer({
     port: wsServerPort,
@@ -38,7 +38,7 @@ export default defineNitroPlugin((nitroApp) => {
       return !!user
     },
   })
-  
+
   wss.on('connection', (ws) => {
     ws.on('error', console.error)
     // 客户端

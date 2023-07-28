@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-19 10:52:18
+ * @LastEditTime: 2023-07-28 17:56:16
  * @FilePath: /cq-green-magpies-app/server/api/chat/addChatLogs.post.ts
  * @Description: 添加聊天记录
  */
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { id, type, chatInfo } = body
-    const res = await ChatService.addChatLog(type, id, chatInfo)
+    await ChatService.addChatLog(type, id, chatInfo)
 
     return responseObject(200, 'ok', {
     })
