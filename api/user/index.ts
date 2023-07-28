@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-07 17:41:18
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-24 16:03:17
+ * @LastEditTime: 2023-07-28 16:03:56
  * @FilePath: /cq-green-magpies-app/api/user/index.ts
  * @Description: cq-用户相关
  */
@@ -34,6 +34,33 @@ export function userLogin(user: LoginParams) {
       id,
       name,
       password,
+    },
+  })
+}
+
+export interface registerParams {
+  username: string
+  password: string
+  admin?: boolean
+}
+
+/**
+ * 用户注册
+ * @param user
+ * @returns
+ */
+export function userRegister(user: registerParams) {
+  const { username, password, admin } = user
+  type TypeRes = commmonFetchRes<{
+    username: string
+    id: number
+  }>
+  return useCustomFetch<TypeRes>('/api/auth/register', {
+    method: 'POST',
+    body: {
+      username,
+      password,
+      admin,
     },
   })
 }

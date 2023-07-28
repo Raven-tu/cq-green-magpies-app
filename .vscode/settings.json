@@ -25,6 +25,7 @@
     "JWTSECRET",
     "nuxt",
     "redev",
-    "tsuk"
+    "tsuk",
+    "unref"
   ]
 }

@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 17:21:46
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-10 17:54:13
+ * @LastEditTime: 2023-07-28 16:02:52
  * @FilePath: /cq-green-magpies-app/server/service/user.service.ts
  * @Description: 用户信息 service
  */
@@ -15,10 +15,11 @@ interface TypeUserInfo {
 }
 
 class UserService {
-  async createUser(user_name: string, password: string) {
+  async createUser(user_name: string, password: string, is_admin = false) {
     const result = await UserModel.create({
       user_name,
       password,
+      is_admin,
     })
     return result as unknown as { user_name: string; id: number }
   }

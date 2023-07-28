@@ -2,9 +2,9 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 13:12:58
+ * @LastEditTime: 2023-07-28 17:34:37
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
- * @Description:
+ * @Description: 默认布局
 -->
 
 <script lang="ts" setup>
@@ -19,10 +19,16 @@ const clientWsStore = useClientWsStore()
 
 async function checkCookie() {
   const { data } = await checkUserInfo()
-  if (data.value?.code === 200)
-    userStore.setUserInfo(data.value.data)
-  else
+  if (data.value?.code === 402) {
+    // 无用户信息引导到注册
     userStore.cleanUserInfo()
+    navigateTo('/setup', { replace: true })
+  }
+  else if (data.value?.code === 200) {
+    userStore.setUserInfo(data.value.data)
+    return true
+  }
+  else { userStore.cleanUserInfo() }
   return data.value?.code === 200
 }
 
