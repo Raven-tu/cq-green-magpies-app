@@ -1,0 +1,11 @@
+node_modules
+dist
+src/auto-imports.d.ts
+src/components.d.ts
+*.json
+components.d.ts
+auto-imports.d.ts
+.eslintrc-auto-import.json
+.github
+tmp/*
+config

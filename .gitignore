@@ -5,3 +5,7 @@ dist
 .nuxt
 .env
 .idea/
+tmp/
+logs
+*.db
+.Ds_Store
