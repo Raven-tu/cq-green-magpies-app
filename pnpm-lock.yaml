@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.4.2
     version: 2.4.2
   '@vueuse/integrations':
-    specifier: ^10.2.1
-    version: 10.2.1(jwt-decode@3.1.2)(vue@3.3.4)
+    specifier: ^10.3.0
+    version: 10.3.0(jwt-decode@3.1.2)(vue@3.3.4)
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
@@ -2917,10 +2917,6 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
-  /@types/node@20.4.4:
-    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
-    dev: true
-
   /@types/node@20.4.5:
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
 
@@ -2931,7 +2927,7 @@ packages:
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
     dev: true
 
   /@types/resolve@1.20.2:
@@ -3683,6 +3679,19 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: true
+
+  /@vueuse/core@10.3.0(vue@3.3.4):
+    resolution: {integrity: sha512-BEM5yxcFKb5btFjTSAFjTu5jmwoW66fyV9uJIP4wUXXU8aR5Hl44gndaaXp7dC5HSObmgbnR2RN+Un1p68Mf5Q==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.17
+      '@vueuse/metadata': 10.3.0
+      '@vueuse/shared': 10.3.0(vue@3.3.4)
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/core@9.13.0(vue@3.3.4):
     resolution: {integrity: sha512-pujnclbeHWxxPRqXWmdkKV5OX4Wk4YeK7wusHqRwU0Q7EFusHoqNA/aPhB6KCh9hEqJkLAJo7bb0Lh9b+OIVzw==}
@@ -3696,8 +3705,8 @@ packages:
       - vue
     dev: true
 
-  /@vueuse/integrations@10.2.1(jwt-decode@3.1.2)(vue@3.3.4):
-    resolution: {integrity: sha512-FDP5lni+z9FjHE9H3xuvwSjoRV9U8jmDvJpmHPCBjUgPGYRynwb60eHWXCFJXLUtb4gSIHy0e+iaEbrKdalCkQ==}
+  /@vueuse/integrations@10.3.0(jwt-decode@3.1.2)(vue@3.3.4):
+    resolution: {integrity: sha512-Jgiv7oFyIgC6BxmDtiyG/fxyGysIds00YaY7sefwbhCZ2/tjEx1W/1WcsISSJPNI30in28+HC2J4uuU8184ekg==}
     peerDependencies:
       async-validator: '*'
       axios: '*'
@@ -3737,8 +3746,8 @@ packages:
       universal-cookie:
         optional: true
     dependencies:
-      '@vueuse/core': 10.2.1(vue@3.3.4)
-      '@vueuse/shared': 10.2.1(vue@3.3.4)
+      '@vueuse/core': 10.3.0(vue@3.3.4)
+      '@vueuse/shared': 10.3.0(vue@3.3.4)
       jwt-decode: 3.1.2
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
@@ -3748,6 +3757,11 @@ packages:
 
   /@vueuse/metadata@10.2.1:
     resolution: {integrity: sha512-3Gt68mY/i6bQvFqx7cuGBzrCCQu17OBaGWS5JdwISpMsHnMKKjC2FeB5OAfMcCQ0oINfADP3i9A4PPRo0peHdQ==}
+    dev: true
+
+  /@vueuse/metadata@10.3.0:
+    resolution: {integrity: sha512-Ema3YhNOa4swDsV0V7CEY5JXvK19JI/o1szFO1iWxdFg3vhdFtCtSTP26PCvbUpnUtNHBY2wx5y3WDXND5Pvnw==}
+    dev: false
 
   /@vueuse/metadata@9.13.0:
     resolution: {integrity: sha512-gdU7TKNAUVlXXLbaF+ZCfte8BjRJQWPCa2J55+7/h+yDtzw3vOoGQDRXzI6pyKyo6bXFT5/QoPE4hAknExjRLQ==}
@@ -3778,6 +3792,16 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: true
+
+  /@vueuse/shared@10.3.0(vue@3.3.4):
+    resolution: {integrity: sha512-kGqCTEuFPMK4+fNWy6dUOiYmxGcUbtznMwBZLC1PubidF4VZY05B+Oht7Jh7/6x4VOWGpvu3R37WHi81cKpiqg==}
+    dependencies:
+      vue-demi: 0.14.5(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/shared@9.13.0(vue@3.3.4):
     resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
@@ -6896,7 +6920,7 @@ packages:
     resolution: {integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: true
@@ -6905,7 +6929,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.4.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
