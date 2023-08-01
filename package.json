@@ -45,7 +45,7 @@
     "@unocss/eslint-config": "^0.54.1",
     "@unocss/nuxt": "^0.53.6",
     "@vite-pwa/nuxt": "^0.1.0",
-    "@vueuse/nuxt": "^10.2.1",
+    "@vueuse/nuxt": "^10.3.0",
     "cq-websocket": "github:momocow/node-cq-websocket",
     "eslint": "^8.45.0",
     "joi": "^17.9.2",
