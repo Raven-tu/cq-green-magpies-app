@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-20 17:07:58
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 16:14:12
+ * @LastEditTime: 2023-08-02 17:01:58
  * @FilePath: /cq-green-magpies-app/store/useChatStore.ts
  * @Description:  聊天 store
  */
@@ -52,16 +52,15 @@ export const useChatStore = defineStore('chatStore', () => {
     return [logsInfo, msgCtx as MsgCtx] as const
   }
 
-  // const getHistoryChatlogs = (logs: LogsChatInfo[]) => {
-
-  // }
   /** 添加历史聊天记录 */
   const addOldChatlogs = (oldLogs: LogsChatInfo[]) => {
-    historyChatlogs.value.push(...oldLogs)
+    const reactiveLogs = reactive(oldLogs)
+    historyChatlogs.value.push(...reactiveLogs)
   }
   /** 添加新的聊天记录 */
   const addNewChatlogs = (newLogs: LogsChatInfo[]) => {
-    historyChatlogs.value = [...newLogs, ...historyChatlogs.value]
+    const reactiveLogs = reactive(newLogs)
+    historyChatlogs.value = [...reactiveLogs, ...historyChatlogs.value]
   }
 
   return {

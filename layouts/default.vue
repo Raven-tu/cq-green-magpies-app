@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-28 17:34:37
+ * @LastEditTime: 2023-08-02 15:17:58
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description: 默认布局
 -->
@@ -13,6 +13,7 @@ import { useUserStore } from '~/store/useUserStore'
 import { checkUserInfo } from '~/api/user/index'
 import { useClientWsStore } from '~/store/useClientWsStore'
 import { getLoginInfo } from '~/api/cq'
+import Notification from '~/components/Notification.vue'
 
 const userStore = useUserStore()
 const clientWsStore = useClientWsStore()
@@ -62,5 +63,7 @@ onMounted(async () => {
     </div>
 
     <!-- <Footer /> -->
+    <!-- 消息通知 -->
+    <Notification />
   </main>
 </template>
