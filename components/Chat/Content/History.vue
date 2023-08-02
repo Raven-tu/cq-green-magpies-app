@@ -2,14 +2,13 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 16:17:20
+ * @LastEditTime: 2023-08-02 17:31:24
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/History.vue
  * @Description: 消息历史记录
 -->
 <script lang='ts' setup>
 import ChatBubble from '~/components/Chat/Content/ChatBubble.vue'
 import { getChatLogs } from '~/api/chat'
-import type { LogsChatInfo } from '~/type/CQ'
 import type { PropschatInfo } from '~/type/chat'
 import { useUserStore } from '~/store/useUserStore'
 import { useChatStore } from '~/store/useChatStore'
@@ -19,10 +18,12 @@ const Props = defineProps<{
   sendMsg: number
 }>()
 const { getLoginInfo } = useUserStore()
-const { addOldChatlogs, cleanChatlogs } = useChatStore()
+const { addOldChatlogs, cleanChatlogs, getHistoryChatlogs } = useChatStore()
 
 const refEl = ref()
-const chatLogs = inject<Ref<LogsChatInfo[]>>('chatLogs', useState<LogsChatInfo[]>('chatLogs', () => []))
+const { arrivedState } = useScroll(refEl, { behavior: 'smooth' })
+const { bottom } = toRefs(arrivedState)
+const chatLogs = computed(() => getHistoryChatlogs())
 const loginInfo = computed(() => getLoginInfo())
 const reverseChatLogs = computed(() => Object.assign([], chatLogs.value).reverse())
 
@@ -48,6 +49,13 @@ watch(() => Props.chatInfo.id, async () => {
 watch(() => Props.sendMsg, async () => {
   await nextTick()
   scrollToBottom(true)
+})
+// 监听聊天信息长度 如果 滚动条在底部 则滚动到底部
+watch(() => chatLogs.value.length, async () => {
+  if (bottom.value) {
+    await nextTick()
+    scrollToBottom(true)
+  }
 })
 </script>
 
