@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 16:24:02
+ * @LastEditTime: 2023-08-02 16:44:14
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
@@ -50,7 +50,9 @@ async function sendMsg() {
   const transMsg = trans2ChatLogs(receivedMsg.value?.data, Props.chatInfo.id)
   // 添加到聊天记录 首位
   addNewChatlogs([transMsg])
-  addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
+  transMsg.message_type === 'group'
+    ? addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
+    : addChatLogs(transMsg.sender_id, transMsg.message_type, transMsg)
   msgInput.value = ''
   emit('onSendMsg')
 }

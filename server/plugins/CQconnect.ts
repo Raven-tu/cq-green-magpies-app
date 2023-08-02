@@ -26,10 +26,14 @@ export default defineNitroPlugin(async () => {
   globalThis.cqBot = botInstance
 
   // 保存聊天记录
-  botInstance.on('message', (e, ctx) => {
+  botInstance.on('message', (_e, ctx) => {
     const [logsInfo] = formatCQCtx(ctx)
-    const { message_type, target_id } = logsInfo
-    ChatService.addChatLog(message_type, target_id, logsInfo)
+    const { message_type, target_id, sender_id } = logsInfo
+    // 保存 到 db
+    message_type === 'group'
+      ? ChatService.addChatLog(message_type, target_id, logsInfo)
+      : ChatService.addChatLog(message_type, sender_id, logsInfo)
+    // 转发 CQ 消息
   })
 
   // 信息转发
