@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 14:54:49
+ * @LastEditTime: 2023-08-02 16:17:20
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/History.vue
  * @Description: 消息历史记录
 -->
@@ -12,12 +12,14 @@ import { getChatLogs } from '~/api/chat'
 import type { LogsChatInfo } from '~/type/CQ'
 import type { PropschatInfo } from '~/type/chat'
 import { useUserStore } from '~/store/useUserStore'
+import { useChatStore } from '~/store/useChatStore'
 
 const Props = defineProps<{
   chatInfo: PropschatInfo
   sendMsg: number
 }>()
 const { getLoginInfo } = useUserStore()
+const { addOldChatlogs, cleanChatlogs } = useChatStore()
 
 const refEl = ref()
 const chatLogs = inject<Ref<LogsChatInfo[]>>('chatLogs', useState<LogsChatInfo[]>('chatLogs', () => []))
@@ -36,9 +38,9 @@ function scrollToBottom(isSmooth = false) {
 
 // 监听聊天栏目切换
 watch(() => Props.chatInfo.id, async () => {
-  chatLogs.value = []
+  cleanChatlogs()
   const { data } = await getChatLogs(Props.chatInfo.type, Props.chatInfo.id, 1, 25)
-  chatLogs.value.push(...data.value?.data.rows ?? [])
+  addOldChatlogs(data.value?.data.rows ?? [])
   await nextTick()
   scrollToBottom()
 })
