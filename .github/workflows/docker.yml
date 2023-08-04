@@ -55,7 +55,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
             ${{ env.IMAGE_NAME }}:latest
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
       
       # - name: Build image and save image
       #   run: |
