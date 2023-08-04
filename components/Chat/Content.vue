@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 09:29:53
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-28 18:02:55
+ * @LastEditTime: 2023-08-02 16:12:36
  * @FilePath: /cq-green-magpies-app/components/Chat/Content.vue
  * @Description: 聊天窗口
 -->
@@ -12,13 +12,10 @@ import Title from '~/components/Chat/Content/Title.vue'
 import Input from '~/components/Chat/Content/Input.vue'
 import History from '~/components/Chat/Content/History.vue'
 import { useChatStore } from '~/store/useChatStore'
-import type { LogsChatInfo } from '~/type/CQ'
 
 const { activeChatType } = storeToRefs(useChatStore())
 const { getActiveChat } = useChatStore()
 
-const chatLogs = useState<LogsChatInfo[]>('chatLogs', () => [])
-provide('chatLogs', chatLogs)
 const sendMsgCount = useState<number>('sendMsgCount', () => 0)
 
 const chatInfo = computed(() => {

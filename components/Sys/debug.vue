@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-05 13:29:23
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 13:09:06
+ * @LastEditTime: 2023-08-02 17:58:16
  * @FilePath: /cq-green-magpies-app/components/Sys/debug.vue
  * @Description:  系统-调试
 -->
@@ -13,9 +13,11 @@ import { useClientWsStore } from '~/store/useClientWsStore'
 const { clientWsInstance } = storeToRefs(useClientWsStore())
 const logs = ref<string[]>([])
 
-onMounted(() => {
-  if (clientWsInstance?.value) {
-    clientWsInstance.value.onmessage = (event: MessageEvent) => {
+onMounted(async () => {
+  await nextTick()
+  const instance = unref(clientWsInstance)
+  if (instance) {
+    instance.onmessage = (event: MessageEvent) => {
       console.log('【调试】', event.data)
       logs.value.push(`【${new Date().toLocaleString()}】\n ${event.data}`)
     }

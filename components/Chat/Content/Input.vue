@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 14:46:16
+ * @LastEditTime: 2023-08-02 16:44:14
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
@@ -12,15 +12,16 @@ import type { TypeMessageItem } from '~/api/cq/index'
 import { addChatLogs } from '~/api/chat/index'
 import { getMessages, sendGroupMsg, sendPrivateMsg } from '~/api/cq/index'
 import type { LogsChatInfo } from '~/type/CQ'
+import { useChatStore } from '~/store/useChatStore'
 
 const Props = defineProps<{
   chatInfo: PropschatInfo
 }>()
 const emit = defineEmits(['onSendMsg'])
+const { addNewChatlogs } = useChatStore()
 const msgInput = ref('')
-const chatLogs = inject<Ref<LogsChatInfo[]>>('chatLogs', useState<LogsChatInfo[]>('chatLogs', () => []))
 
-function addReceivedMsg2ChatLogs(msgInfo: TypeMessageItem, target_id: number) {
+function trans2ChatLogs(msgInfo: TypeMessageItem, target_id: number) {
   const transMsg: LogsChatInfo = {
     message_type: msgInfo.message_type as 'private' | 'group',
     message: msgInfo.message,
@@ -32,8 +33,6 @@ function addReceivedMsg2ChatLogs(msgInfo: TypeMessageItem, target_id: number) {
     time: msgInfo.time,
     isRecall: false,
   }
-  // 添加到聊天记录 首位
-  chatLogs.value.splice(0, 0, transMsg)
   return transMsg
 }
 
@@ -48,8 +47,12 @@ async function sendMsg() {
   if (!receivedMsg.value)
     return console.error('获取消息失败')
 
-  const transMsg = addReceivedMsg2ChatLogs(receivedMsg.value?.data, Props.chatInfo.id)
-  addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
+  const transMsg = trans2ChatLogs(receivedMsg.value?.data, Props.chatInfo.id)
+  // 添加到聊天记录 首位
+  addNewChatlogs([transMsg])
+  transMsg.message_type === 'group'
+    ? addChatLogs(transMsg.target_id, transMsg.message_type, transMsg)
+    : addChatLogs(transMsg.sender_id, transMsg.message_type, transMsg)
   msgInput.value = ''
   emit('onSendMsg')
 }
@@ -84,7 +87,7 @@ function handleKeyUp(e: KeyboardEvent) {
       rounded-xl
       @click="sendMsg"
     >
-      <div class="i-material-symbols-send-outline h-5 w-5 dark:i-material-symbols-send" />
+      <div class="i-material-symbols-send-outline dark:i-material-symbols-send h-5 w-5" />
     </button>
   </div>
 </template>
