@@ -7,9 +7,9 @@
   "author": "Raven-tu",
   "license": "GPL-3.0",
   "scripts": {
-    "build": "nuxi build",
-    "dev": "nuxi dev",
-    "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev",
+    "build": "nuxi build --dotenv .env.local",
+    "dev": "nuxi dev --dotenv .env.local",
+    "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev --dotenv .env.local",
     "start": "node .output/server/index.mjs",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",

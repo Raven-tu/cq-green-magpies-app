@@ -11,7 +11,7 @@ import WebSocket from 'ws'
 export default defineEventHandler(async (event) => {
   // 请求头中获取  accessToken
   const reqAccessToken = getHeader(event, 'Authorization')
-  const { host } = useRuntimeConfig().cqConfig
+  const { host } = useRuntimeConfig().cq
   // 已经连接转发ws
   if (globalThis.ws)
     return responseObject(200, 'is ready', {})

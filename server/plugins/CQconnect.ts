@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-20 18:10:36
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 16:42:50
+ * @LastEditTime: 2023-08-08 10:55:28
  * @FilePath: /cq-green-magpies-app/server/plugins/CQconnect.ts
  * @Description: CQ websocket 连接 消息处理
  */
@@ -16,7 +16,7 @@ import { groupMsg, privateAndAtMsg } from '~/server/utils/ws/cqMsg'
 
 export default defineNitroPlugin(async () => {
   // TODO: 从 DB 中获取
-  const { host, port, accessToken } = useRuntimeConfig().cqConfig
+  const { host, port, accessToken } = useRuntimeConfig().cq
   const [msg, botInstance] = await testWs2cq(host, Number(port), accessToken)
   // TODO: 连接失败退出 nuxt 服务
   if (msg !== 'ok') {

@@ -2,9 +2,9 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-25 13:32:46
+ * @LastEditTime: 2023-08-08 13:29:00
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
- * @Description:
+ * @Description: nuxt config
  */
 import { isDevelopment } from 'std-env'
 import { pwa } from './config/pwa'
@@ -40,9 +40,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     JWTSECRET: isDevelopment ? 'jLmbfXUz897WgG' : `${Math.random().toString(36).substring(2, 7)}`,
-    cqConfig: {
-      host: '192.168.1.218',
-      port: '6800',
+    cq: {
+      host: '',
+      port: '',
       accessToken: '',
     },
   },
@@ -97,6 +97,7 @@ export default defineNuxtConfig({
       bodyAttrs: {
         class: 'overflow-x-hidden',
       },
+      title: 'cq-green-magpies-app',
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
         { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },

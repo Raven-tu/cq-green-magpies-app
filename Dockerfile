@@ -1,4 +1,6 @@
-FROM node:20-buster-slim
+FROM node:20-buster-slim as base
+
+ARG PORT=6800
 
 # 修改时区
 ENV TZ=Asia/Shanghai \
@@ -15,25 +17,26 @@ RUN mkdir -p /app/
 # 定位到容器的工作目录
 WORKDIR /app/
 
-# 把当前目录下的所有文件拷贝到 /app/ 目录下
-COPY . /app/
+# Build
+FROM base as build
 
-RUN cd /app/
-
-# 删除无用的文件
-RUN rm -rf ./db
-
-#RUN npm config set registry "https://registry.npmmirror.com"
-#RUN npm i
-# 设置淘宝原
-# RUN yarn config set registry "https://registry.npmmirror.com"
+COPY --link package.json package-lock.json .
 
 # 使用pnpm 安装
 RUN npm i pnpm -g
 RUN pnpm install
 
+COPY --link . .
+
 # 构建应用
 RUN npm run build
+RUN pnpm prune
 
-EXPOSE 6800
+# Run
+FROM base
+
+COPY --from=build /app/.output /app/.output
+
+EXPOSE ${PORT}
+
 CMD ["node","run","start"]
