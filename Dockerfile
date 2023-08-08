@@ -2,7 +2,7 @@
 
 FROM node:20-buster-slim as base
 
-ARG PORT=6800
+ARG PORT=3000
 
 # 修改时区
 ENV TZ=Asia/Shanghai \
@@ -12,7 +12,9 @@ RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && dpkg-reconfigure --frontend noninteractive tzdata \
     && rm -rf /var/lib/apt/lists/*
+
 # RUN npm config set registry https://registry.npmmirror.com/
+
 RUN npm install pnpm -g
 
 # 在容器中创建一个目录
@@ -38,8 +40,9 @@ RUN pnpm prune
 FROM base
 
 COPY --from=build /app/.output /app/.output
+COPY --from=build /app/node_modules /app/node_modules
 
 EXPOSE ${PORT}
 
-CMD ["node","run","start"]
+ENTRYPOINT ["node", "/app/.output/server/index.mjs"]
 
