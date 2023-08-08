@@ -20,7 +20,7 @@ WORKDIR /app/
 # Build
 FROM base as build
 
-COPY --link package.json package-lock.json .
+COPY --link package.json pnpm-lock.yaml .
 
 # 使用pnpm 安装
 RUN npm i pnpm -g
