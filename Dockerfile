@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1.4
+
 FROM node:20-buster-slim as base
 
 ARG PORT=6800
@@ -17,13 +19,15 @@ RUN mkdir -p /app/
 # 定位到容器的工作目录
 WORKDIR /app/
 
+# 安装 pnpm
+RUN npm i pnpm -g
+
 # Build
 FROM base as build
 
 COPY --link package.json pnpm-lock.yaml .
 
-# 使用pnpm 安装
-RUN npm i pnpm -g
+# 使用pnpm 安装依赖
 RUN pnpm install
 
 COPY --link . .
