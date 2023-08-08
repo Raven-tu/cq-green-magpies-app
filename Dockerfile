@@ -12,28 +12,26 @@ RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && dpkg-reconfigure --frontend noninteractive tzdata \
     && rm -rf /var/lib/apt/lists/*
+# RUN npm config set registry https://registry.npmmirror.com/
+RUN npm install pnpm -g
 
 # 在容器中创建一个目录
 RUN mkdir -p /app/
-
 # 定位到容器的工作目录
-WORKDIR /app/
-
-# 安装 pnpm
-RUN npm i pnpm -g
+WORKDIR /app
 
 # Build
 FROM base as build
 
-COPY --link package.json pnpm-lock.yaml .
+# 把当前目录下的所有文件拷贝到 /app/ 目录下
+COPY . /app/
 
-# 使用pnpm 安装依赖
+# 使用npm 安装依赖
+# RUN pnpm config set registry https://registry.npmmirror.com/
 RUN pnpm install
 
-COPY --link . .
-
 # 构建应用
-RUN npm run build
+RUN pnpm run build
 RUN pnpm prune
 
 # Run
@@ -44,3 +42,4 @@ COPY --from=build /app/.output /app/.output
 EXPOSE ${PORT}
 
 CMD ["node","run","start"]
+
