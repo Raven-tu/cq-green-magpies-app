@@ -40,7 +40,9 @@ RUN pnpm prune
 FROM base
 
 COPY --from=build /app/.output /app/.output
-COPY --from=build /app/node_modules /app/node_modules
+
+# 不拷贝node_modules 缩减镜像大小
+# COPY --from=build /app/node_modules /app/node_modules
 
 EXPOSE ${PORT}
 
