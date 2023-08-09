@@ -9,6 +9,7 @@
 
 import * as path from 'node:path'
 import { Sequelize } from 'sequelize'
+import 'sqlite3'
 
 const __dirname = path.resolve()
 const sqlPath = path.resolve(__dirname, './server/db/logs.db')

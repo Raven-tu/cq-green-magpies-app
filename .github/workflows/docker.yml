@@ -1,0 +1,77 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: docker_build
+
+on:
+  workflow_dispatch:
+    inputs:
+        name:
+          description: 'Create a doke image'
+          required: true
+          default: 'create docker_images'
+
+env:
+  IMAGE_NAME: cq-green-magpies
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: dev
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      
+      - name: Get app version
+        id: app_version
+        run: | # 获取版本号 package.json 中的 version 字段
+          echo "app_version=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" >> $GITHUB_ENV
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USER_NAME }}/${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
+            ${{ secrets.DOCKER_USER_NAME }}/${{ env.IMAGE_NAME }}:latest
+          context: .
+          platforms: linux/amd64
+      
+      # - name: Build image and save image
+      #   run: |
+      #     docker build ./ -t ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
+      #     docker save -o ${{ env.IMAGE_NAME }}.tar ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
+      #     tar -zcvf ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz ${{ env.IMAGE_NAME }}.tar
+      
+      # # 发布 Release
+      # - name: Create Release and Upload Release Asset
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     tag_name: ${{env.app_version}}-${{ env.today }}
+      #     name: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}
+      #     body: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}, build by github actions
+      #     draft: false 
+      #     prerelease: false
+      #     files: |
+      #       ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz
+          
