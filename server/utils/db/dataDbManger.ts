@@ -2,13 +2,14 @@
  * @Author: raventu
  * @Date: 2023-07-10 17:08:37
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-14 14:00:42
+ * @LastEditTime: 2023-08-09 11:05:52
  * @FilePath: /cq-green-magpies-app/server/utils/db/dataDbManger.ts
  * @Description:
  */
 
 import * as path from 'node:path'
 import { Sequelize } from 'sequelize'
+import 'sqlite3'
 
 const __dirname = path.resolve()
 const sqlPath = path.resolve(__dirname, './server/db/data.db')

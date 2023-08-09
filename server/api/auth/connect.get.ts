@@ -2,16 +2,24 @@
  * @Author: raventu
  * @Date: 2023-06-27 18:11:26
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 10:34:10
+ * @LastEditTime: 2023-08-09 10:24:11
  * @FilePath: /cq-green-magpies-app/server/api/auth/connect.get.ts
  * @Description: 连接到 nuxt ws
  */
+import { resolve } from 'node:path'
 import WebSocket from 'ws'
+import { jsonc } from 'jsonc'
 
 export default defineEventHandler(async (event) => {
   // 请求头中获取  accessToken
   const reqAccessToken = getHeader(event, 'Authorization')
-  const { host } = useRuntimeConfig().cq
+  // 读取配置文件
+  const __dirname = resolve()
+  const CONF_PATH = resolve(__dirname, './server/config/CQ.jsonc')
+  const CQ_CONF = jsonc.readSync(CONF_PATH)
+  const { host } = CQ_CONF
+  // const { host } = useRuntimeConfig().cq
+
   // 已经连接转发ws
   if (globalThis.ws)
     return responseObject(200, 'is ready', {})
