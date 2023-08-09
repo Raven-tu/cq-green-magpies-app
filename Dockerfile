@@ -44,7 +44,10 @@ COPY --from=build /app/.output /app/.output
 # 不拷贝node_modules 缩减镜像大小
 # COPY --from=build /app/node_modules /app/node_modules
 
+# web port
 EXPOSE ${PORT}
+# wss port
+EXPOSE 24615 
 
 ENTRYPOINT ["node", "/app/.output/server/index.mjs"]
 

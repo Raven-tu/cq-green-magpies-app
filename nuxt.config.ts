@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-08 13:29:00
+ * @LastEditTime: 2023-08-09 13:47:49
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description: nuxt config
  */
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   },
 
   appConfig: {
-    wsServerPort: 4000,
+    wsServerPort: 24615, // wss 服务端口
   },
 
   runtimeConfig: {
