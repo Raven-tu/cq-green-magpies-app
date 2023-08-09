@@ -10,9 +10,11 @@ on:
 jobs:
   del_runs:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     steps:
       - name: Keep Workflow only for 7 days but leave at least one
-        uses: GitRML/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           retain_days: ${{ github.event.inputs.retain_days }}
           keep_minimum_runs: 1
