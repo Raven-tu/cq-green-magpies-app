@@ -2,13 +2,14 @@
  * @Author: raventu
  * @Date: 2023-07-20 17:07:58
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 17:01:58
+ * @LastEditTime: 2023-08-11 16:53:27
  * @FilePath: /cq-green-magpies-app/store/useChatStore.ts
  * @Description:  聊天 store
  */
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { TypeFriendItem, TypeGroupItem } from '@/api/cq'
 import type { LogsChatInfo, MsgCtx } from '~/type/CQ'
+import { purificationMsg } from '~/utils/CQcode'
 
 type TypeChatInfo = TypeFriendItem | TypeGroupItem
 
@@ -40,7 +41,7 @@ export const useChatStore = defineStore('chatStore', () => {
     // 去掉特殊字符
     const logsInfo: LogsChatInfo = {
       message_type: msgCtx.message_type,
-      message: msgCtx.message,
+      message: purificationMsg(msgCtx.message),
       message_raw: msgCtx.raw_message,
       message_id: msgCtx.message_id,
       target_id: msgCtx.message_type === 'private' ? msgCtx.target_id : msgCtx.group_id,

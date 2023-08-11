@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 16:44:14
+ * @LastEditTime: 2023-08-11 16:23:27
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/Input.vue
  * @Description: 消息输入框
 -->
@@ -58,6 +58,7 @@ async function sendMsg() {
 }
 
 function handleKeyUp(e: KeyboardEvent) {
+  e.preventDefault() // 阻止换行
   if (e.key === 'Enter' && !e.shiftKey)
     sendMsg()
   else if (e.key === 'Enter' && e.shiftKey)

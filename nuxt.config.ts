@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-09 13:47:49
+ * @LastEditTime: 2023-08-11 16:09:20
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description: nuxt config
  */
@@ -107,6 +107,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: appDescription },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        { name: 'referrer', content: 'never' },
       ],
       script: [
         { ...(isDevelopment && { src: 'https://cdn.jsdelivr.net/npm/spacingjs', type: 'text/javascript', defer: true }) },
