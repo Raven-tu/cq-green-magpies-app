@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](///compare/v0.1.1...v0.2.0) (2023-08-11)
+
+
+### Features
+
+* 聊天记录增加图片渲染 5d8f6ee
+
+
+### Bug Fixes
+
+*  dockerfile export wss port 20617d6
+* update dockerfile a319a4b
+* update dockerfile dc286bb
+* update dockerfile c1c5f60
+* update dockerfile 76702e2
+
 ### 0.1.1 (2023-08-08)
 
 

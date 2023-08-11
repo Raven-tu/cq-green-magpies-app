@@ -2,7 +2,7 @@
   "name": "cq-green-magpies-app",
   "private": true,
   "packageManager": "pnpm@8.6.10",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "配对 go-cqhttp 的 web 前端应用",
   "author": "Raven-tu",
   "license": "GPL-3.0",
