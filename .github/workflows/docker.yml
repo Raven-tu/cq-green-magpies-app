@@ -57,21 +57,21 @@ jobs:
           context: .
           platforms: linux/amd64
       
-      # - name: Build image and save image
-      #   run: |
-      #     docker build ./ -t ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
-      #     docker save -o ${{ env.IMAGE_NAME }}.tar ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
-      #     tar -zcvf ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz ${{ env.IMAGE_NAME }}.tar
+      - name: Build image and save image
+        run: |
+          docker build ./ -t ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
+          docker save -o ${{ env.IMAGE_NAME }}.tar ${{ env.IMAGE_NAME }}:${{env.app_version}}-${{ env.today }}
+          tar -zcvf ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz ${{ env.IMAGE_NAME }}.tar
       
-      # # 发布 Release
-      # - name: Create Release and Upload Release Asset
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     tag_name: ${{env.app_version}}-${{ env.today }}
-      #     name: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}
-      #     body: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}, build by github actions
-      #     draft: false 
-      #     prerelease: false
-      #     files: |
-      #       ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz
+      # 发布 Release
+      - name: Create Release and Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{env.app_version}}-${{ env.today }}
+          name: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}
+          body: ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}, build by github actions
+          draft: false 
+          prerelease: false
+          files: |
+            ${{ env.IMAGE_NAME }}-${{env.app_version}}-${{ env.today }}.tar.gz
           
