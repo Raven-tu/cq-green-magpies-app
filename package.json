@@ -43,7 +43,7 @@
     "@nuxt/kit": "^3.6.5",
     "@nuxtjs/color-mode": "^3.3.0",
     "@pinia/nuxt": "^0.4.11",
-    "@sidebase/nuxt-auth": "0.6.0-beta.3",
+    "@sidebase/nuxt-auth": "0.6.0-beta.4",
     "@tsuk1ko/cq-websocket": "^2.4.2",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.4.5",
