@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 15:17:58
+ * @LastEditTime: 2023-08-14 14:05:37
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description: 默认布局
 -->
@@ -34,17 +34,15 @@ async function checkCookie() {
 }
 
 onMounted(async () => {
-  const checkFlag = await checkCookie()
-  if (checkFlag)
+  const accessToken = useCookie('accessToken')
+  const checkFlag = accessToken.value ? await checkCookie() : false
+  if (checkFlag) {
     clientWsStore.initClientWs()
-  else
-    return
-
-  // 获取登录信息
-  const { data: loginData } = await getLoginInfo()
-
-  if (loginData.value)
-    userStore.setLoginInfo(loginData.value?.data)
+    // 获取登录信息
+    const { data: loginData } = await getLoginInfo()
+    if (loginData.value)
+      userStore.setLoginInfo(loginData.value?.data)
+  }
 })
 </script>
 
