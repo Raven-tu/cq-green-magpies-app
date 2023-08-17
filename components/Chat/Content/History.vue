@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 17:31:24
+ * @LastEditTime: 2023-08-17 11:13:21
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/History.vue
  * @Description: 消息历史记录
 -->
@@ -60,7 +60,19 @@ watch(() => chatLogs.value.length, async () => {
 </script>
 
 <template>
-  <div class="my-2 h-20 w-full flex-1 overflow-hidden">
+  <div class="relative my-2 h-20 w-full flex-1 overflow-hidden">
+    <!-- Back to bottom -->
+    <div class="absolute bottom-5 right-10">
+      <div v-if="bottom" />
+      <div v-else class="h-2 w-full transition-all" @click="scrollToBottom(true)">
+        <div class="h-full w-full flex items-center justify-center">
+          <div class="h-8 w-8 flex-center rounded-full bg-gray-200 shadow-xl" dark="bg-dark-200">
+            <div class="i-material-symbols-vertical-align-bottom" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <ul ref="refEl" class="h-full overflow-y-scroll px-4">
       <li v-for="(item, index) in reverseChatLogs" :key="index">
         <ChatBubble :chat-info="Props.chatInfo" :chat-logs="item" :login-info="loginInfo" />
