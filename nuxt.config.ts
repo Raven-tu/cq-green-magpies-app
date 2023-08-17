@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-11 16:09:20
+ * @LastEditTime: 2023-08-17 13:26:16
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description: nuxt config
  */
@@ -72,7 +72,14 @@ export default defineNuxtConfig({
 
   css: [
     '@unocss/reset/tailwind.css',
+    '~/style/scrollbar.css',
   ],
+
+  postcss:{
+    plugins: {
+      'postcss-preset-env': {},
+    },
+  },
 
   colorMode: {
     classSuffix: '',
