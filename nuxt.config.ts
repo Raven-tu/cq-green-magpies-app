@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-17 13:26:16
+ * @LastEditTime: 2023-08-18 10:21:59
  * @FilePath: /cq-green-magpies-app/nuxt.config.ts
  * @Description: nuxt config
  */
@@ -86,6 +86,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    compressPublicAssets:  {
+      gzip: true,
+      brotli: true,
+    },
     esbuild: {
       options: {
         target: 'esnext',
