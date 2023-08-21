@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-07-10 14:44:39
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-17 13:43:43
+ * @LastEditTime: 2023-08-21 15:12:25
  * @FilePath: /cq-green-magpies-app/components/Chat/Content/History.vue
  * @Description: 消息历史记录
 -->
@@ -63,14 +63,16 @@ watch(() => chatLogs.value.length, async () => {
   <div class="relative my-2 h-20 w-full flex-1 overflow-hidden">
     <!-- Back to bottom -->
     <div class="absolute bottom-5 right-10">
-      <div v-if="bottom" />
-      <div v-else class="h-2 w-full transition-all" @click="scrollToBottom(true)">
-        <div class="h-full w-full flex items-center justify-center">
-          <div class="h-8 w-8 flex-center rounded-full bg-gray-200 shadow-xl" dark="bg-gray-700">
-            <div class="i-material-symbols-vertical-align-bottom" />
+      <Transition>
+        <div v-if="bottom" />
+        <div v-else class="h-2 w-full transition-all" @click="scrollToBottom(true)">
+          <div class="h-full w-full flex items-center justify-center">
+            <div class="h-8 w-8 flex-center rounded-full bg-gray-200 shadow-xl" dark="bg-gray-700">
+              <div class="i-material-symbols-vertical-align-bottom" />
+            </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
 
     <ul ref="refEl" class="h-full overflow-y-scroll px-4">
@@ -80,3 +82,15 @@ watch(() => chatLogs.value.length, async () => {
     </ul>
   </div>
 </template>
+
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
