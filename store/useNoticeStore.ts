@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-08-01 17:05:49
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-02 18:00:15
+ * @LastEditTime: 2023-08-21 15:00:50
  * @FilePath: /cq-green-magpies-app/store/useNoticeStore.ts
  * @Description: 消息通知store
  */
@@ -37,6 +37,29 @@ export const useNoticeStore = defineStore('noticeStore', () => {
     })
   }
 
+  // web应用通知
+  const sendWebNotification = (logsInfo: LogsChatInfo) => {
+    const {
+      isSupported,
+      // notification,
+      show,
+      // close,
+      // onClick,
+      // onShow,
+      // onError,
+      // onClose,
+    } = useWebNotification({
+      title: logsInfo.sender_name,
+      body: ellipsisMsg(logsInfo.message, 60),
+      dir: 'auto',
+      lang: 'zh-CN',
+      renotify: true,
+      tag: 'test',
+    })
+    if (isSupported.value)
+      show()
+  }
+
   // 处理消息通知
   const handleWSCMsg = (msg: string) => {
     const msgObj = JSON.parse(msg)
@@ -45,7 +68,8 @@ export const useNoticeStore = defineStore('noticeStore', () => {
         break
       case 'message': {
         const [logsInfo] = chatStore.formatCQCtx(msgObj)
-        sendNotice(logsInfo)
+        sendNotice(logsInfo) // 通知
+        sendWebNotification(logsInfo) // 桌面通知
         if (msgObj.message_type === 'private') {
           const friend = chatStore.getActiveChat('private')
           // 当前聊天窗口是该好友
