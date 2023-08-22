@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-05-21 20:06:47
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-14 14:05:37
+ * @LastEditTime: 2023-08-22 13:47:45
  * @FilePath: /cq-green-magpies-app/layouts/default.vue
  * @Description: 默认布局
 -->
@@ -47,21 +47,32 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="main-layout flex">
-    <!-- left -->
-    <MainNav />
+  <n-layout has-sider class="main-layout flex">
+    <!-- sider -->
+    <n-layout-sider
+      collapse-mode="width"
+      width="80"
+      :collapsed="false"
+      :collapsed-width="64"
+      position="static"
+      :native-scrollbar="false"
+    >
+      <MainNav />
+    </n-layout-sider>
 
     <!-- right -->
-    <div class="layout-content flex flex-1 flex-col">
-      <div class="h-auto w-full flex-1 overflow-hidden">
+    <n-layout class="layout-content flex flex-col">
+      <n-layout-content position="absolute" class="h-[calc(100vh-30PX)] overflow-hidden">
         <slot />
-      </div>
+      </n-layout-content>
+      <!-- <Footer /> -->
       <!-- 底部状态条 -->
-      <StatusButtonBar />
-    </div>
+      <n-layout-footer bordered position="absolute" class="bottom-30PX">
+        <StatusButtonBar />
+      </n-layout-footer>
+    </n-layout>
 
-    <!-- <Footer /> -->
     <!-- 消息通知 -->
     <Notification />
-  </main>
+  </n-layout>
 </template>
