@@ -2,7 +2,7 @@
  * @Author: raventu
  * @Date: 2023-06-26 16:07:57
  * @LastEditors: raventu
- * @LastEditTime: 2023-07-28 18:20:01
+ * @LastEditTime: 2023-08-22 13:50:19
  * @FilePath: /cq-green-magpies-app/components/MainNav.vue
  * @Description: 主导航栏
 -->
@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="layout-nav h-100vh w-20 flex flex-col justify-between p-4"
+    class="layout-nav h-100vh w-full flex flex-col justify-between p-4"
     bg="gray-300 dark:gray-800"
   >
     <div class="flex flex-col space-y-6">

@@ -19,6 +19,7 @@ export const useNoticeStore = defineStore('noticeStore', () => {
   const { clientWs, connectFlag } = storeToRefs(useClientWsStore())
   const chatStore = useChatStore()
   const notification = useNotification()
+  const appStore = useAppStore()
 
   const sendNotice = (logsInfo: LogsChatInfo) => {
     notification.create({
@@ -68,8 +69,8 @@ export const useNoticeStore = defineStore('noticeStore', () => {
         break
       case 'message': {
         const [logsInfo] = chatStore.formatCQCtx(msgObj)
-        sendNotice(logsInfo) // 通知
-        sendWebNotification(logsInfo) // 桌面通知
+        appStore.chatSettings.message_notification && sendNotice(logsInfo) // 通知
+        appStore.chatSettings.message_web_notification && sendWebNotification(logsInfo) // 桌面通知
         if (msgObj.message_type === 'private') {
           const friend = chatStore.getActiveChat('private')
           // 当前聊天窗口是该好友
