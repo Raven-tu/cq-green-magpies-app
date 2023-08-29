@@ -21,6 +21,7 @@
     "release-patch": "standard-version --release-as patch",
     "start": "node .output/server/index.mjs",
     "start:generate": "npx serve .output/public",
+    "analyze": "nuxi analyze",
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {

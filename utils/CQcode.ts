@@ -2,12 +2,12 @@
  * @Author: raventu
  * @Date: 2023-08-11 13:18:04
  * @LastEditors: raventu
- * @LastEditTime: 2023-08-11 16:52:32
+ * @LastEditTime: 2023-08-29 17:06:22
  * @FilePath: /cq-green-magpies-app/utils/CQcode.ts
  * @Description: CQ码相关工具
  */
 
-import { filter, transform } from 'lodash-es'
+import { filter, isNil, transform } from 'lodash-es'
 
 /**
  * 判断消息是否有图片
@@ -81,13 +81,28 @@ export function escapeInsideCQ(str: string) {
   return escape(str, true)
 }
 
+// 转化为 CQ 码
+export function toCQString(type: string, data: Record<string, any>) {
+  // [CQ:类型,参数=值,参数=值]
+  const list = Array.from(Object.entries(data))
+    .filter(([, v]) => !isNil(v))
+    .map(kv => kv.map(escapeInsideCQ).join('='))
+  list.unshift(`CQ:${type}`)
+  return `[${list.join(',')}]`
+}
+
+type TypeCqType = 'image' | 'face' | 'record' | 'at' | 'text' | 'file'
+
 // CQ 码消息对象
 export interface TypeCQMsgObj {
-  type: string
-  file: string
+  type: TypeCqType
   subType: string
   url: string
   text: string
+  id: string
+  name: string
+  size: number
+  busid: number
 }
 
 /**
@@ -104,10 +119,14 @@ export function purificationMsg(originMsg: string) {
         return '[表情]'
       case 'record':
         return '[语音]'
+      case 'file':
+        return '[文件]'
       case 'at':
         return '[艾特]'
       case 'text':
         return item.text
+      default:
+        return ''
     }
   })
   return result.join('')
