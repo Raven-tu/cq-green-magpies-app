@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](///compare/v0.2.0...v0.2.1) (2023-08-29)
+
+
+### Features
+
+* 开启 gzip 压缩 041d4e0
+* 聊天群文件消息 f415b60
+* 美化滚动条 cad4128
+* 设置页增加通知控制开关 90ebdfc
+* 添加桌面通知 446604e
+* 增加返回底部 6ea195d
+
+
+### Bug Fixes
+
+* 登录时优先检查cookie状态 3f9c8b3
+
 ## [0.2.0](///compare/v0.1.1...v0.2.0) (2023-08-11)
 
 
