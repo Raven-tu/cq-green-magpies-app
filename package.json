@@ -32,7 +32,7 @@
     "jsonwebtoken": "^9.0.1",
     "jwt-decode": "^3.1.2",
     "lodash-es": "^4.17.21",
-    "nuxt": "^3.6.5",
+    "nuxt": "^3.7.0",
     "ws": "^8.13.0"
   },
   "devDependencies": {
