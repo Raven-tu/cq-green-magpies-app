@@ -1,5 +1,11 @@
 # cq-green-magpies-app
 
+## [重要信息](https://github.com/Mrs4s/go-cqhttp/issues/2471)
+
+>由于QQ官方针对协议库的围追堵截, 不断更新加密方案, 我们已无力继续维护此项目.
+建议Bot开发者尽快迁移至无头NTQQ项目 -> https://github.com/Mrs4s/go-cqhttp/issues/2471
+
+
 ## Description
 
 `cq-green-magpies-app` 是一个专门为了兼容 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 而设计的web QQ。
